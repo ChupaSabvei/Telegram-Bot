@@ -10,5 +10,10 @@ Governance: `.specify/memory/constitution.md` (v1.0.0)
 Core modules: `src/bot/`, `src/scrapers/`, `src/ai/`, `src/storage/`
 
 For feature-level technical context, read the current plan at
-`specs/[###-feature-name]/plan.md` when it exists.
+`specs/001-ai-event-discovery/plan.md`.
+
+Tech stack (MVP): Python 3.11, aiogram 3, httpx, BeautifulSoup4, SQLAlchemy
+async, SQLite (dev) / PostgreSQL Supabase (prod), OpenAI gpt-4o-mini, pytest.
+
+Key contracts: `specs/001-ai-event-discovery/contracts/`
 <!-- SPECKIT END -->
