@@ -23,13 +23,13 @@ description: "Task list for ИИ-помощник для подбора меро
 
 **Purpose**: Инициализация проекта и инструментов
 
-- [ ] T001 Create `src/` module tree per plan.md (`bot/`, `scrapers/`, `ai/`, `storage/`)
-- [ ] T002 [P] Create `requirements.txt` with aiogram, httpx, bs4, pydantic, sqlalchemy, apscheduler, openai, python-dotenv, rapidfuzz, pytest deps in `requirements.txt`
-- [ ] T003 [P] Configure ruff in `pyproject.toml`
-- [ ] T004 [P] Create `.env.example` with `BOT_TOKEN`, `OPENAI_API_KEY`, `DATABASE_URL` in `.env.example`
-- [ ] T005 [P] Create GitHub Actions CI workflow in `.github/workflows/ci.yml` (ruff + pytest)
-- [ ] T006 [P] Create `tests/` tree (`unit/`, `integration/`, `contract/`, `fixtures/`) with `conftest.py` in `tests/conftest.py`
-- [ ] T007 Create CLI stub in `scripts/sync_events.py` with argparse (`--city`, `--all-cities`)
+- [X] T001 Create `src/` module tree per plan.md (`bot/`, `scrapers/`, `ai/`, `storage/`)
+- [X] T002 [P] Create `requirements.txt` with aiogram, httpx, bs4, pydantic, sqlalchemy, apscheduler, openai, python-dotenv, rapidfuzz, pytest deps in `requirements.txt`
+- [X] T003 [P] Configure ruff in `pyproject.toml`
+- [X] T004 [P] Create `.env.example` with `BOT_TOKEN`, `OPENAI_API_KEY`, `DATABASE_URL` in `.env.example`
+- [X] T005 [P] Create GitHub Actions CI workflow in `.github/workflows/ci.yml` (ruff + pytest)
+- [X] T006 [P] Create `tests/` tree (`unit/`, `integration/`, `contract/`, `fixtures/`) with `conftest.py` in `tests/conftest.py`
+- [X] T007 Create CLI stub in `scripts/sync_events.py` with argparse (`--city`, `--all-cities`)
 
 ---
 
@@ -41,33 +41,33 @@ description: "Task list for ИИ-помощник для подбора меро
 
 ### Tests First (TDD — must FAIL before implementation)
 
-- [ ] T008 [P] Contract test for `EventDTO` vs `specs/001-ai-event-discovery/contracts/event-schema.json` in `tests/contract/test_event_schema.py`
-- [ ] T009 [P] Contract test for scraper output using HTML/API fixtures in `tests/contract/test_scraper_output.py`
-- [ ] T010 [P] Unit test for date window + offline filters in `tests/unit/test_filters.py`
-- [ ] T011 [P] Unit test for deduplication logic in `tests/unit/test_dedup.py`
+- [X] T008 [P] Contract test for `EventDTO` vs `specs/001-ai-event-discovery/contracts/event-schema.json` in `tests/contract/test_event_schema.py`
+- [X] T009 [P] Contract test for scraper output using HTML/API fixtures in `tests/contract/test_scraper_output.py`
+- [X] T010 [P] Unit test for date window + offline filters in `tests/unit/test_filters.py`
+- [X] T011 [P] Unit test for deduplication logic in `tests/unit/test_dedup.py`
 
 ### Storage Layer
 
-- [ ] T012 [P] Implement Pydantic `EventDTO`, city enum, category slugs in `src/storage/schemas.py`
-- [ ] T013 Implement SQLAlchemy models (Category, EventSource, Event, UserSettings) per `data-model.md` in `src/storage/models.py`
-- [ ] T014 Implement async engine, session factory, `init`/`seed` CLI in `src/storage/database.py`
-- [ ] T015 Implement event repository (query by city+category, by IDs, upsert) in `src/storage/repositories/events.py`
-- [ ] T016 [P] Implement user settings repository in `src/storage/repositories/users.py`
-- [ ] T017 Seed 6 categories + 2 event sources (yandex_afisha, kudago) in `src/storage/database.py`
+- [X] T012 [P] Implement Pydantic `EventDTO`, city enum, category slugs in `src/storage/schemas.py`
+- [X] T013 Implement SQLAlchemy models (Category, EventSource, Event, UserSettings) per `data-model.md` in `src/storage/models.py`
+- [X] T014 Implement async engine, session factory, `init`/`seed` CLI in `src/storage/database.py`
+- [X] T015 Implement event repository (query by city+category, by IDs, upsert) in `src/storage/repositories/events.py`
+- [X] T016 [P] Implement user settings repository in `src/storage/repositories/users.py`
+- [X] T017 Seed 6 categories + 2 event sources (yandex_afisha, kudago) in `src/storage/database.py`
 
 ### Scrapers
 
-- [ ] T018 Implement `ScraperProtocol` and registry in `src/scrapers/base.py`
-- [ ] T019 [P] Implement KudaGo API scraper per `contracts/scraper-interface.md` in `src/scrapers/kudago.py`
-- [ ] T020 [P] Implement Yandex Afisha HTML scraper with rate limiting in `src/scrapers/yandex_afisha.py`
-- [ ] T021 Implement sync runner (validate, filter, dedup, upsert) in `src/scrapers/runner.py`
-- [ ] T022 Integration test for sync pipeline with mocked HTTP in `tests/integration/test_scraper_sync.py`
+- [X] T018 Implement `ScraperProtocol` and registry in `src/scrapers/base.py`
+- [X] T019 [P] Implement KudaGo API scraper per `contracts/scraper-interface.md` in `src/scrapers/kudago.py`
+- [X] T020 [P] Implement Yandex Afisha HTML scraper with rate limiting in `src/scrapers/yandex_afisha.py`
+- [X] T021 Implement sync runner (validate, filter, dedup, upsert) in `src/scrapers/runner.py`
+- [X] T022 Integration test for sync pipeline with mocked HTTP in `tests/integration/test_scraper_sync.py`
 
 ### Bot Shared Components
 
-- [ ] T023 [P] Implement city and category inline keyboards per `contracts/bot-commands.md` in `src/bot/keyboards/menus.py`
-- [ ] T024 [P] Implement event list/card message formatters in `src/bot/formatters/events.py`
-- [ ] T025 Implement app config loader from `.env` in `src/config.py`
+- [X] T023 [P] Implement city and category inline keyboards per `contracts/bot-commands.md` in `src/bot/keyboards/menus.py`
+- [X] T024 [P] Implement event list/card message formatters in `src/bot/formatters/events.py`
+- [X] T025 Implement app config loader from `.env` in `src/config.py`
 
 **Checkpoint**: Foundation ready — `python scripts/sync_events.py --city moscow` saves events; all Phase 2 tests pass
 
@@ -81,14 +81,14 @@ description: "Task list for ИИ-помощник для подбора меро
 
 ### Tests for User Story 1
 
-- [ ] T026 [P] [US1] Integration test for onboarding FSM in `tests/integration/test_bot_onboarding.py`
+- [X] T026 [P] [US1] Integration test for onboarding FSM in `tests/integration/test_bot_onboarding.py`
 
 ### Implementation for User Story 1
 
-- [ ] T027 [US1] Implement FSM states and `/start` city onboarding in `src/bot/handlers/start.py`
-- [ ] T028 [US1] Implement category browse handler and empty-state message in `src/bot/handlers/categories.py`
-- [ ] T029 [US1] Wire handlers, FSM, middleware (user settings injection) in `src/bot/main.py`
-- [ ] T030 [US1] Add `/categories` and `/help` commands in `src/bot/handlers/start.py`
+- [X] T027 [US1] Implement FSM states and `/start` city onboarding in `src/bot/handlers/start.py`
+- [X] T028 [US1] Implement category browse handler and empty-state message in `src/bot/handlers/categories.py`
+- [X] T029 [US1] Wire handlers, FSM, middleware (user settings injection) in `src/bot/main.py`
+- [X] T030 [US1] Add `/categories` and `/help` commands in `src/bot/handlers/start.py`
 
 **Checkpoint**: US1 fully functional — новый пользователь выбирает город и видит список по категории
 
@@ -102,12 +102,12 @@ description: "Task list for ИИ-помощник для подбора меро
 
 ### Tests for User Story 4
 
-- [ ] T031 [P] [US4] Integration test for city change in `tests/integration/test_bot_settings.py`
+- [X] T031 [P] [US4] Integration test for city change in `tests/integration/test_bot_settings.py`
 
 ### Implementation for User Story 4
 
-- [ ] T032 [US4] Implement `/settings` handler and city callback in `src/bot/handlers/settings.py`
-- [ ] T033 [US4] Register settings handler and «⚙️ Настройки» button in `src/bot/keyboards/menus.py` and `src/bot/main.py`
+- [X] T032 [US4] Implement `/settings` handler and city callback in `src/bot/handlers/settings.py`
+- [X] T033 [US4] Register settings handler and «⚙️ Настройки» button in `src/bot/keyboards/menus.py` and `src/bot/main.py`
 
 **Checkpoint**: US4 complete — смена города влияет на все последующие запросы
 
@@ -121,15 +121,15 @@ description: "Task list for ИИ-помощник для подбора меро
 
 ### Tests for User Story 2
 
-- [ ] T034 [P] [US2] Unit tests for ranker (happy path, clarification, fallback) in `tests/unit/test_ai_ranker.py`
+- [X] T034 [P] [US2] Unit tests for ranker (happy path, clarification, fallback) in `tests/unit/test_ai_ranker.py`
 
 ### Implementation for User Story 2
 
-- [ ] T035 [P] [US2] Implement versioned prompts in `src/ai/prompts.py`
-- [ ] T036 [P] [US2] Implement OpenAI client wrapper in `src/ai/client.py`
-- [ ] T037 [US2] Implement retrieve-then-rank per `contracts/ai-assistant-contract.md` in `src/ai/ranker.py`
-- [ ] T038 [US2] Implement free-text search handler with typing indicator in `src/bot/handlers/search.py`
-- [ ] T039 [US2] Register search handler for non-command text messages in `src/bot/main.py`
+- [X] T035 [P] [US2] Implement versioned prompts in `src/ai/prompts.py`
+- [X] T036 [P] [US2] Implement OpenAI client wrapper in `src/ai/client.py`
+- [X] T037 [US2] Implement retrieve-then-rank per `contracts/ai-assistant-contract.md` in `src/ai/ranker.py`
+- [X] T038 [US2] Implement free-text search handler with typing indicator in `src/bot/handlers/search.py`
+- [X] T039 [US2] Register search handler for non-command text messages in `src/bot/main.py`
 
 **Checkpoint**: US2 complete — ИИ-поиск и fallback работают
 
@@ -143,9 +143,9 @@ description: "Task list for ИИ-помощник для подбора меро
 
 ### Implementation for User Story 3
 
-- [ ] T040 [US3] Implement event detail handler (`evt:` callback) in `src/bot/handlers/event_detail.py`
-- [ ] T041 [US3] Implement list context storage for `back:list` navigation in `src/bot/handlers/event_detail.py`
-- [ ] T042 [US3] Wire event callbacks from category and search result keyboards in `src/bot/handlers/categories.py` and `src/bot/handlers/search.py`
+- [X] T040 [US3] Implement event detail handler (`evt:` callback) in `src/bot/handlers/event_detail.py`
+- [X] T041 [US3] Implement list context storage for `back:list` navigation in `src/bot/handlers/event_detail.py`
+- [X] T042 [US3] Wire event callbacks from category and search result keyboards in `src/bot/handlers/categories.py` and `src/bot/handlers/search.py`
 
 **Checkpoint**: US3 complete — полный путь от списка до карточки и обратно
 
@@ -155,10 +155,10 @@ description: "Task list for ИИ-помощник для подбора меро
 
 **Purpose**: Фоновая синхронизация, документация, финальная валидация
 
-- [ ] T043 [P] Add APScheduler daily sync job in `src/bot/main.py`
-- [ ] T044 Complete `scripts/sync_events.py` CLI delegating to `src/scrapers/runner.py`
-- [ ] T045 [P] Add stale-data notice in formatters when source sync failed in `src/bot/formatters/events.py`
-- [ ] T046 [P] Create project `README.md` with setup link to `specs/001-ai-event-discovery/quickstart.md`
+- [X] T043 [P] Add APScheduler daily sync job in `src/bot/main.py`
+- [X] T044 Complete `scripts/sync_events.py` CLI delegating to `src/scrapers/runner.py`
+- [X] T045 [P] Add stale-data notice in formatters when source sync failed in `src/bot/formatters/events.py`
+- [X] T046 [P] Create project `README.md` with setup link to `specs/001-ai-event-discovery/quickstart.md`
 - [ ] T047 Run full quickstart.md validation scenarios and fix blockers
 
 ---
