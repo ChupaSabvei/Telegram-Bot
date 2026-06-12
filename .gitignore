@@ -1,0 +1,42 @@
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+credentials.json
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+dist/
+build/
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Logs and local data
+*.log
+logs/
+*.db
+*.sqlite
+*.sqlite3
+data/cache/
+scraped_data/
+
+# IDE and OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
