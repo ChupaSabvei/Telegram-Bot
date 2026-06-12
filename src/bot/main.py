@@ -4,6 +4,7 @@ import asyncio
 import logging
 
 from aiogram import Bot, Dispatcher, F
+from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.fsm.storage.memory import MemoryStorage
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -12,6 +13,7 @@ from src.bot.handlers.event_detail import router as event_detail_router
 from src.bot.handlers.search import router as search_router
 from src.bot.handlers.settings import router as settings_router
 from src.bot.handlers.start import router as start_router
+from src.bot.proxy import resolve_telegram_proxy
 from src.config import get_config
 from src.scrapers.runner import sync_all_sources
 from src.storage.database import build_runtime, init_db, seed_defaults
@@ -28,11 +30,20 @@ async def bootstrap() -> None:
     await seed_defaults(runtime)
 
 
+def create_bot(cfg) -> Bot:  # type: ignore[no-untyped-def]
+    proxy = resolve_telegram_proxy(cfg.telegram_proxy)
+    if proxy:
+        logging.info("Telegram proxy enabled: %s", proxy)
+        session = AiohttpSession(proxy=proxy)
+        return Bot(token=cfg.bot_token, session=session)
+    return Bot(token=cfg.bot_token)
+
+
 async def run_bot() -> None:
     cfg = get_config()
     await bootstrap()
 
-    bot = Bot(token=cfg.bot_token)
+    bot = create_bot(cfg)
     dp = Dispatcher(storage=MemoryStorage())
     dp.include_router(start_router)
     dp.include_router(settings_router)

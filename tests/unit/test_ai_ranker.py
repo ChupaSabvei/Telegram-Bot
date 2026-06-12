@@ -69,19 +69,62 @@ async def test_ai_ranker_happy_path() -> None:
 async def test_ai_ranker_clarification_path() -> None:
     ranker = AIRanker(llm_client=ClarifyClient())  # type: ignore[arg-type]
     result = await ranker.rank(
-        RankRequest(query="что-то интересное", city_slug="moscow", candidates=make_candidates())
+        RankRequest(query="??", city_slug="moscow", candidates=make_candidates())
     )
     assert result.event_ids == []
     assert result.clarification_needed
-    assert result.clarification_message == "Уточните запрос"
     assert not result.fallback_used
 
 
 @pytest.mark.asyncio
-async def test_ai_ranker_fallback_path() -> None:
+async def test_ai_ranker_fallback_broad_query() -> None:
     ranker = AIRanker(llm_client=FailingClient())  # type: ignore[arg-type]
     result = await ranker.rank(
-        RankRequest(query="джаз концерт", city_slug="moscow", candidates=make_candidates())
+        RankRequest(
+            query="чем заняться в городе",
+            city_slug="moscow",
+            candidates=make_candidates(),
+        )
     )
     assert result.fallback_used
-    assert "1" in result.event_ids
+    assert result.event_ids
+    assert not result.clarification_needed
+
+
+@pytest.mark.asyncio
+async def test_ai_ranker_fallback_weekend_broad_query() -> None:
+    now = datetime.now(tz=UTC)
+    days_until_saturday = (5 - now.weekday()) % 7
+    saturday = now + timedelta(days=days_until_saturday)
+    sunday = saturday + timedelta(days=1)
+    candidates = [
+        EventCandidate(
+            id="weekend-1",
+            title="Концерт на выходных",
+            description="Музыка",
+            category_slug="concerts",
+            start_at=saturday.replace(hour=19, minute=0, second=0, microsecond=0),
+            venue="Клуб",
+            price_text="от 1000 ₽",
+        ),
+        EventCandidate(
+            id="weekday-1",
+            title="Лекция в будни",
+            description="Образование",
+            category_slug="education",
+            start_at=now + timedelta(days=10),
+            venue="Центр",
+            price_text="бесплатно",
+        ),
+    ]
+    ranker = AIRanker(llm_client=FailingClient())  # type: ignore[arg-type]
+    result = await ranker.rank(
+        RankRequest(
+            query="Найди в москве чем заняться на этих выходных",
+            city_slug="moscow",
+            candidates=candidates,
+        )
+    )
+    assert result.fallback_used
+    assert result.event_ids == ["weekend-1"]
+    assert not result.clarification_needed

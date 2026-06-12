@@ -14,6 +14,13 @@ from src.storage.repositories.users import UserSettingsRepository
 router = Router()
 
 
+@router.callback_query(F.data == "back:settings")
+async def open_settings(callback: CallbackQuery, state: FSMContext) -> None:
+    await state.set_state(BotStates.SETTINGS_CITY)
+    await callback.message.edit_text("Выберите новый город.", reply_markup=city_keyboard())
+    await callback.answer()
+
+
 @router.message(Command("settings"))
 async def cmd_settings(message: Message, state: FSMContext) -> None:
     await state.set_state(BotStates.SETTINGS_CITY)

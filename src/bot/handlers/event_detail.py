@@ -4,7 +4,7 @@ from aiogram import F, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery
 
-from src.bot.formatters.events import format_event_card, format_event_list
+from src.bot.formatters.events import EVENT_MESSAGE_PARSE_MODE, format_event_card, format_event_list
 from src.bot.keyboards.menus import event_card_keyboard, events_keyboard
 from src.bot.states import BotStates
 from src.storage.database import build_runtime
@@ -29,6 +29,7 @@ async def show_event_card(callback: CallbackQuery, state: FSMContext) -> None:
         await callback.message.edit_text(
             format_event_card(event),
             reply_markup=event_card_keyboard(event.source_url),
+            parse_mode=EVENT_MESSAGE_PARSE_MODE,
         )
         await callback.answer()
 
@@ -50,6 +51,12 @@ async def back_to_list(callback: CallbackQuery, state: FSMContext) -> None:
         await state.set_state(BotStates.BROWSING_CATEGORY)
         await callback.message.edit_text(
             format_event_list(events, category_slug=category_slug, city_slug=user.city_slug),
-            reply_markup=events_keyboard([event.id for event in events]) if events else None,
+            reply_markup=events_keyboard(
+                [event.id for event in events],
+                [event.title for event in events],
+            )
+            if events
+            else None,
+            parse_mode=EVENT_MESSAGE_PARSE_MODE,
         )
         await callback.answer()

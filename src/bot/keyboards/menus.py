@@ -47,9 +47,16 @@ def category_keyboard() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
 
-def events_keyboard(event_ids: list[str]) -> InlineKeyboardMarkup:
-    rows = [[InlineKeyboardButton(text=f"Открыть #{idx + 1}", callback_data=f"evt:{event_id}")]
-            for idx, event_id in enumerate(event_ids)]
+def events_keyboard(event_ids: list[str], titles: list[str] | None = None) -> InlineKeyboardMarkup:
+    rows = []
+    for idx, event_id in enumerate(event_ids):
+        label = f"▸ {idx + 1}"
+        if titles and idx < len(titles):
+            short_title = titles[idx][:28] + ("…" if len(titles[idx]) > 28 else "")
+            label = f"▸ {idx + 1}. {short_title}"
+        if len(label) > 64:
+            label = label[:63] + "…"
+        rows.append([InlineKeyboardButton(text=label, callback_data=f"evt:{event_id}")])
     rows.append([InlineKeyboardButton(text="◀️ Назад", callback_data="back:menu")])
     return InlineKeyboardMarkup(inline_keyboard=rows)
 

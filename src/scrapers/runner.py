@@ -56,6 +56,8 @@ async def sync_all_sources(city_slugs: list[str] | None = None) -> SyncReport:
                 report.results.append(result)
                 events = await _safe_fetch(scraper=scraper, city_slug=city_slug, result=result)
                 result.fetched = len(events)
+                if not events and getattr(scraper, "last_error", None):
+                    result.errors.append(str(scraper.last_error))
 
                 for event in events:
                     if not filter_event_window(event):

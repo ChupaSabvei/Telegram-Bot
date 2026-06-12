@@ -43,7 +43,7 @@ class EventRepository:
             )
         )
 
-    async def list_by_city_category(self, city_slug: str, category_slug: str, limit: int = 10) -> list[Event]:
+    async def list_by_city_category(self, city_slug: str, category_slug: str, limit: int = 20) -> list[Event]:
         category_id = await self.get_category_id(category_slug)
         query = (
             self._active_window_query()

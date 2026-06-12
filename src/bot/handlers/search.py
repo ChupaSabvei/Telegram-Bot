@@ -7,9 +7,12 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 from src.ai.client import OpenAIClient
-from src.ai.ranker import AIRanker, EventCandidate, RankRequest
-from src.bot.formatters.events import format_event_list
-from src.bot.keyboards.menus import events_keyboard
+from src.ai.intent import detect_search_mode, extract_place_topic
+from src.ai.places import PlaceAdvisor
+from src.ai.ranker import AIRanker, EventCandidate, RankRequest, _is_broad_query, _is_weekend_query
+from src.bot.formatters.events import EVENT_MESSAGE_PARSE_MODE, format_event_list
+from src.bot.formatters.places import format_places_response
+from src.bot.keyboards.menus import category_keyboard, events_keyboard
 from src.bot.states import BotStates
 from src.config import get_config
 from src.storage.database import build_runtime
@@ -26,7 +29,7 @@ async def search_events(message: Message, state: FSMContext) -> None:
         return
     text = message.text.strip()
     if not text:
-        await message.answer("Напишите запрос или выберите категорию.")
+        await message.answer("Напишите запрос или напишите, что хотите посетить.")
         return
     if len(text) > 500:
         await message.answer("Запрос слишком длинный. Максимум 500 символов.")
@@ -42,9 +45,30 @@ async def search_events(message: Message, state: FSMContext) -> None:
             await message.answer("Сначала выполните /start.")
             return
 
-        candidates = await event_repo.list_candidates_for_ai(user.city_slug)
         cfg = get_config()
-        ranker = AIRanker(OpenAIClient(api_key=cfg.openai_api_key))
+        llm_client = OpenAIClient(
+            api_key=cfg.openai_api_key,
+            model=cfg.openai_model,
+            base_url=cfg.openai_api_base,
+        )
+
+        if detect_search_mode(text) == "places":
+            topic = extract_place_topic(text)
+            places = await PlaceAdvisor(llm_client).recommend(
+                query=text,
+                city_slug=user.city_slug,
+                topic=topic,
+            )
+            await state.set_state(BotStates.AI_SEARCH)
+            await message.answer(
+                format_places_response(places),
+                parse_mode=EVENT_MESSAGE_PARSE_MODE,
+                reply_markup=category_keyboard(),
+            )
+            return
+
+        candidates = await event_repo.list_candidates_for_ai(user.city_slug)
+        ranker = AIRanker(llm_client)
         req = RankRequest(
             query=text,
             city_slug=user.city_slug,
@@ -65,11 +89,28 @@ async def search_events(message: Message, state: FSMContext) -> None:
         if response.clarification_needed and not response.event_ids:
             await message.answer(
                 response.clarification_message
-                or "Уточните, пожалуйста: какой тип мероприятия или дату вы ищете?"
+                or "Уточните, пожалуйста: какой тип мероприятия или дату вы ищете?",
+                reply_markup=category_keyboard(),
             )
             return
 
         events = await event_repo.get_by_ids(response.event_ids)
+        if not events:
+            await message.answer(
+                "Не нашёл подходящих мероприятий в афише.\n"
+                "Попробуйте другую формулировку или выберите категорию.",
+                reply_markup=category_keyboard(),
+            )
+            return
+
+        header = response.preface_message or ""
+        if header and not header.endswith("\n"):
+            header += "\n\n"
+        if not header and response.fallback_used and _is_weekend_query(text):
+            header = "🗓 Подборка на ближайшие выходные:\n\n"
+        elif not header and response.fallback_used and _is_broad_query(text):
+            header = "✨ Подборка мероприятий на ближайшие дни:\n\n"
+
         await state.update_data(
             last_list_ids=[event.id for event in events],
             last_category="other",
@@ -77,6 +118,11 @@ async def search_events(message: Message, state: FSMContext) -> None:
         )
         await state.set_state(BotStates.AI_SEARCH)
         await message.answer(
-            format_event_list(events=events, category_slug="other", city_slug=user.city_slug),
-            reply_markup=events_keyboard([item.id for item in events]) if events else None,
+            header
+            + format_event_list(events=events, category_slug="other", city_slug=user.city_slug),
+            reply_markup=events_keyboard(
+                [item.id for item in events],
+                [item.title for item in events],
+            ),
+            parse_mode=EVENT_MESSAGE_PARSE_MODE,
         )

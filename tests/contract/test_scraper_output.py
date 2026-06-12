@@ -82,6 +82,7 @@ async def test_yandex_scraper_output_contract(event_validator: Draft7Validator, 
 
     class DummyResponse:
         text = html
+        status_code = 200
 
         def raise_for_status(self) -> None:
             return None
