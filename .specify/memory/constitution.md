@@ -1,50 +1,168 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+- Version change: template (unversioned) → 1.0.0
+- Modified principles: all placeholders replaced with project-specific principles
+  - [PRINCIPLE_1] → I. Modular Architecture
+  - [PRINCIPLE_2] → II. AI-Assisted Event Discovery
+  - [PRINCIPLE_3] → III. Reliable External Data Ingestion
+  - [PRINCIPLE_4] → IV. Test-First Development (NON-NEGOTIABLE)
+  - [PRINCIPLE_5] → V. Team-First GitHub Workflow
+- Added sections: Technology Stack & Security Constraints; Development Workflow & Quality Gates
+- Removed sections: none (template placeholders filled)
+- Templates requiring updates:
+  - ✅ .specify/templates/plan-template.md (Constitution Check gates)
+  - ✅ .cursor/rules/specify-rules.mdc (project context)
+  - ⚠ .specify/templates/spec-template.md (no changes required — generic)
+  - ⚠ .specify/templates/tasks-template.md (no changes required — paths set per plan)
+- Follow-up TODOs: none
+-->
+
+# Telegram Event Bot Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Modular Architecture
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+Кодовая база MUST быть разделена на независимые модули с чёткими границами
+ответственности:
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+- `src/bot/` — Telegram-интерфейс, команды, диалоги, форматирование ответов
+- `src/scrapers/` — сбор и нормализация мероприятий с внешних сайтов
+- `src/ai/` — ИИ-помощник: интерпретация запросов, подбор и ранжирование
+- `src/storage/` — персистентность: события, категории, кэш, пользовательские
+  предпочтения
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+Модули MUST иметь явные контракты (типы/схемы данных) и MUST NOT обращаться к
+внутренним деталям других модулей напрямую. Общая логика выносится в
+переиспользуемые компоненты только при доказанной необходимости (YAGNI).
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### II. AI-Assisted Event Discovery
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+ИИ-помощник MUST помогать пользователю находить мероприятия по категориям и
+естественным запросам. Система MUST:
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+- Принимать текстовые запросы и выбирать релевантные категории
+- Ранжировать результаты по соответствию запросу, дате и доступности
+- Возвращать понятные ответы в Telegram (название, дата, место, ссылка)
+- Деградировать gracefully при недоступности ИИ (fallback на фильтры по
+  категориям без генерации)
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+Промпты и ответы ИИ MUST быть версионируемы и тестируемы; «магические»
+непрозрачные цепочки без логирования запрещены.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### III. Reliable External Data Ingestion
+
+Мероприятия MUST поступать из внешних интернет-источников через модуль
+`src/scrapers/`. Каждый скрапер MUST:
+
+- Приводить данные к единой схеме события (название, категория, дата, место,
+  URL, источник)
+- Обрабатывать ошибки сети и изменения вёрстки без падения бота
+- Соблюдать rate limits и robots.txt там, где применимо
+- Дедуплицировать события по URL или стабильному идентификатору
+
+Сырые данные и кэш MUST NOT попадать в git; секреты и токены — только через
+переменные окружения.
+
+### IV. Test-First Development (NON-NEGOTIABLE)
+
+Для критических путей (скраперы, схемы данных, ИИ-ранжирование, хендлеры бота)
+применяется TDD:
+
+1. Написать тест → получить одобрение → убедиться, что тест падает
+2. Реализовать минимальный код → тест проходит
+3. Рефакторинг без изменения поведения
+
+Интеграционные тесты MUST покрывать: контракты между модулями, парсинг
+реальных/фикстурных HTML-страниц, сценарии диалога бота. PR без тестов на новую
+бизнес-логику MUST быть отклонён.
+
+### V. Team-First GitHub Workflow
+
+Разработка MUST вестись командой через GitHub:
+
+- Каждая фича — отдельная ветка `###-feature-name` от `master`
+- Изменения вливаются только через Pull Request с описанием и test plan
+- Минимум один review перед merge (кроме срочных hotfix с пост-ревью)
+- Мелкие атомарные коммиты с понятными сообщениями
+- CI MUST проходить до merge (lint + tests)
+
+Прямой push в `master` запрещён для командной работы.
+
+## Technology Stack & Security Constraints
+
+**Язык**: Python 3.11+
+
+**Основные компоненты**:
+
+- Telegram Bot API (python-telegram-bot или aiogram)
+- ИИ-провайдер (OpenAI-совместимый API или аналог)
+- HTTP-клиент и парсинг (httpx + BeautifulSoup; Playwright — при необходимости
+  JS-рендеринга)
+- Хранилище: PostgreSQL / Supabase или SQLite для локальной разработки
+
+**Безопасность**:
+
+- Токены бота, API-ключи ИИ и БД — только в `.env` (файл в `.gitignore`)
+- `.env.example` MUST содержать шаблон без секретов
+- Логи MUST NOT содержать персональные данные и секреты
+- Зависимости фиксируются в `requirements.txt` или `pyproject.toml`
+
+**Производительность**:
+
+- Ответ бота пользователю — целевой p95 < 5 с для подбора мероприятий
+- Скраперы работают асинхронно/по расписанию, не блокируя основной event loop
+
+## Development Workflow & Quality Gates
+
+1. **Specify** → уточнить требования в `specs/###-feature/spec.md`
+2. **Plan** → технический план с Constitution Check в `plan.md`
+3. **Tasks** → декомпозиция в `tasks.md`
+4. **Implement** → код в feature-ветке, PR на GitHub
+5. **Review** → проверка соответствия конституции, тестов и test plan
+
+**Quality gates перед merge**:
+
+- [ ] Constitution Check пройден (см. plan.md)
+- [ ] Тесты зелёные
+- [ ] Нет секретов в diff
+- [ ] Документация/quickstart обновлены при изменении API или деплоя
+
+Структура репозитория:
+
+```text
+src/
+├── bot/
+├── scrapers/
+├── ai/
+└── storage/
+tests/
+├── unit/
+├── integration/
+└── contract/
+specs/
+└── ###-feature-name/
+```
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+Эта конституция имеет приоритет над неформальными договорённостями и ad-hoc
+решениями. Любое изменение принципов или ограничений MUST:
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+1. Оформляться через PR с обновлением `.specify/memory/constitution.md`
+2. Сопровождаться bump версии по semver (см. ниже)
+3. Синхронизировать зависимые шаблоны в `.specify/templates/` и
+   `.cursor/rules/`
+
+**Версионирование конституции**:
+
+- MAJOR — удаление или переопределение принципа
+- MINOR — новый принцип или существенное расширение раздела
+- PATCH — уточнения формулировок без изменения смысла
+
+Все PR и code review MUST проверять соответствие конституции. Сложность сверх
+минимально достаточной MUST быть обоснована в `plan.md` (Complexity Tracking).
+Оперативные инструкции для агентов и разработчиков — в
+`.cursor/rules/specify-rules.mdc` и `specs/`.
+
+**Version**: 1.0.0 | **Ratified**: 2026-06-12 | **Last Amended**: 2026-06-12

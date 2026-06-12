@@ -40,7 +40,20 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+Reference: `.specify/memory/constitution.md` (v1.0.0)
+
+- [ ] **Modular Architecture**: New code lives in `src/bot/`, `src/scrapers/`,
+      `src/ai/`, or `src/storage/` with explicit module contracts
+- [ ] **AI-Assisted Discovery**: User-facing recommendations support categories
+      and natural-language queries; AI failure has a documented fallback
+- [ ] **Data Ingestion**: External events normalized to shared schema;
+      scrapers handle errors without crashing the bot
+- [ ] **Test-First**: Critical paths have failing tests before implementation;
+      integration/contract tests planned where modules interact
+- [ ] **GitHub Workflow**: Work on `###-feature-name` branch; PR with test plan;
+      no secrets in diff; CI green before merge
+- [ ] **Security**: Secrets in `.env` only; `.env.example` updated if new vars
+      added
 
 ## Project Structure
 
@@ -65,12 +78,12 @@ specs/[###-feature]/
 -->
 
 ```text
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
+# Telegram Event Bot (default layout per constitution)
 src/
-├── models/
-├── services/
-├── cli/
-└── lib/
+├── bot/           # Telegram handlers, dialogs, formatting
+├── scrapers/      # External site parsers and normalizers
+├── ai/            # LLM prompts, ranking, category mapping
+└── storage/       # DB models, repositories, cache
 
 tests/
 ├── contract/
