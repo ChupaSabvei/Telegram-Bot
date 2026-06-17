@@ -1,0 +1,1041 @@
+{
+  "props": {
+    "pageProps": {
+      "announcementRelatedRecommendations": {
+        "id": -1,
+        "title": "Афиша <%= regionNameGenitive %>",
+        "alias": "ribbon",
+        "metaTitle": "Афиша <%= regionNameGenitive %> <%= date %> билеты на МТС Live",
+        "metaDescription": "Афиша интересных мероприятий <%= date %> в <%= regionNamePrepositional %>. Расписание концертов, спектаклей, мюзиклов, развлечений для детей. Билеты с кешбэком от 10% до 20% на МТС Лайв. <%= announcementsTotal %>",
+        "enableUserSort": false,
+        "filterIds": [
+          "Calendar"
+        ],
+        "defaultSortId": "Rating",
+        "imageUrl": "https://live.mts.ru/image/images/open_graph_collection_image.jpg",
+        "description": null,
+        "modelName": "live_sort",
+        "items": [
+          {
+            "like": false,
+            "id": 2839196,
+            "title": "Концерт Линды",
+            "alias": "linda_46",
+            "url": "/moscow/announcements/linda_46?eventId=28449941",
+            "imageUrl": "https://live.mts.ru/image/536x360/linda_46-9ff32019-008c-4194-93f6-886b53093c0f.jpg",
+            "eventMinPrice": 2500,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-07-02T20:00:00",
+            "venue": {
+              "id": 559990,
+              "title": "Академ Джаз Клуб",
+              "url": "/moscow/venues/club/akademicheskiy-na-arbate"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 14456096,
+            "title": "Балет «Лебединое озеро»",
+            "alias": "spektakl-lebedinoe-ozero",
+            "url": "/moscow/announcements/spektakl-lebedinoe-ozero?eventId=28046163",
+            "imageUrl": "https://live.mts.ru/image/536x360/spektakl-lebedinoe-ozero-8f3e977e-eb0c-40fb-a33a-e8f608f34d5e.jpg",
+            "eventMinPrice": 1000,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-06-24T19:00:00",
+            "venue": {
+              "id": 559985,
+              "title": "Государственный Кремлевский Дворец",
+              "url": "/moscow/venues/concert-hall/gosudarstvenniy-kremlevskiy-dvorec"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20256316,
+            "title": "Концерт Архиерейского мужского хора «Аксиос»",
+            "alias": "vdnkh-arkhiereyskiy-muzhskoy-khor-aksios",
+            "url": "/moscow/announcements/vdnkh-arkhiereyskiy-muzhskoy-khor-aksios?eventId=28545730",
+            "imageUrl": "https://live.mts.ru/image/536x360/vdnkh-arkhiereyskiy-muzhskoy-khor-aksios-69adf8ff-059f-42ee-94cf-04521832b2b8.jpg",
+            "eventMinPrice": 2300,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-07-21T20:00:00",
+            "venue": {
+              "id": 2523920,
+              "title": "Зеленый театр ВДНХ",
+              "url": "/moscow/venues/theater/zelenyy-teatr-vdnkh"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20256326,
+            "title": "Концерт группы «Лесоповал»",
+            "alias": "gruppa-lesopoval-reutov",
+            "url": "/moscow/announcements/gruppa-lesopoval-reutov?eventId=28530699",
+            "imageUrl": "https://live.mts.ru/image/536x360/gruppa-lesopoval-reutov-8d328fef-6baf-40c7-abd2-f4d3dfe89f72.jpg",
+            "eventMinPrice": 2500,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-10-29T20:00:00",
+            "venue": {
+              "id": 560112,
+              "title": "Деловой комплекс «Мир»",
+              "url": "/moscow/venues/drugoe/delovoy-kompleks-mir"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20256328,
+            "title": "Концерт Ирины и Александра Круг",
+            "alias": "irina-i-aleksandr-krug-dubna",
+            "url": "/moscow/announcements/irina-i-aleksandr-krug-dubna?eventId=28530488",
+            "imageUrl": "https://live.mts.ru/image/536x360/irina-i-aleksandr-krug-dubna-0b6cbf68-215f-4096-95ce-939a2b912f5e.jpg",
+            "eventMinPrice": 2800,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-12-18T19:00:00",
+            "venue": {
+              "id": 560801,
+              "title": "ДК Октябрь (Дубна)",
+              "url": "/moscow/venues/dom-kultury/dk-oktyabr-podolsk"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20257587,
+            "title": "Большой сольный концерт певицы Светы",
+            "alias": "sveta-bolshoy-solnyy-koncert-16",
+            "url": "/moscow/announcements/sveta-bolshoy-solnyy-koncert-16?eventId=28548416",
+            "imageUrl": "https://live.mts.ru/image/536x360/sveta-bolshoy-solnyy-koncert-16-424b6bb4-0597-4c89-8bf7-0230e1272c20.jpg",
+            "eventMinPrice": 2650,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-10-23T20:00:00",
+            "venue": {
+              "id": 17304712,
+              "title": "Развлекательный центр «Tau»",
+              "url": "/moscow/venues/drugoe/razvlekatelnyy-centr-tau"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20390001,
+            "title": "Киномикс (cinema medley) 1: Интерстеллар",
+            "alias": "1-kinomiks-cinema-medley-interstellar",
+            "url": "/moscow/announcements/1-kinomiks-cinema-medley-interstellar?eventId=28706542",
+            "imageUrl": "https://live.mts.ru/image/536x360/1-kinomiks-cinema-medley-interstellar-0b9439c9-fc21-46b7-a214-4bbb00e17544.jpg",
+            "eventMinPrice": 2500,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-11-14T19:00:00",
+            "venue": {
+              "id": 561145,
+              "title": "ЦСКА Арена",
+              "url": "/moscow/venues/arena/vtb"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20245654,
+            "title": "Концерт хора Сретенского монастыря",
+            "alias": "khor-sretenskogo-monastyrya-glyubercy-dk-lyubereckiy",
+            "url": "/moscow/announcements/khor-sretenskogo-monastyrya-glyubercy-dk-lyubereckiy?eventId=28530596",
+            "imageUrl": "https://live.mts.ru/image/536x360/khor-sretenskogo-monastyrya-glyubercy-dk-lyubereckiy-619daa61-7c99-4472-ac73-bd0f66ba9112.jpg",
+            "eventMinPrice": 2500,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-12-04T19:00:00",
+            "venue": {
+              "id": 560040,
+              "title": "Люберецкий дворец культуры",
+              "url": "/moscow/venues/dom-kultury/lyubereckiy-rayonnyy-dvorec-kultury"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20245579,
+            "title": "Концерт при свечах «Солисты оркестра CAGMO – Гарри Поттер и Миядзаки»",
+            "alias": "solisty-orkestra-cagmo-garri-potter-i-miyadzaki-koncert-pri",
+            "url": "/moscow/announcements/solisty-orkestra-cagmo-garri-potter-i-miyadzaki-koncert-pri?eventId=28532221",
+            "imageUrl": "https://live.mts.ru/image/536x360/solisty-orkestra-cagmo-garri-potter-i-miyadzaki-koncert-pri-6e3c16e7-0a86-480d-9478-fffb02658f01.jpg",
+            "eventMinPrice": 3500,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-07-02T20:00:00",
+            "venue": {
+              "id": 6941629,
+              "title": "Российская Академия музыки имени Гнесиных",
+              "url": "/moscow/venues/concert-hall/rossiiskaya-akademiya-myziki-imeni-gnesinih"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20245668,
+            "title": "Концерт «U108 Live: Deep Softness. Мягкая Глубина»",
+            "alias": "u108-live-deep-softness-myagkaya-glubina",
+            "url": "/moscow/announcements/u108-live-deep-softness-myagkaya-glubina?eventId=28516546",
+            "imageUrl": "https://live.mts.ru/image/536x360/u108-live-deep-softness-myagkaya-glubina-753fd5ee-796b-448d-ae04-f205c41a7045.jpg",
+            "eventMinPrice": 2500,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-07-19T20:00:00",
+            "venue": {
+              "id": 560064,
+              "title": "Клуб «16 Тонн»",
+              "url": "/moscow/venues/club/club-16-tonn"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20258040,
+            "title": "Концерт «Музыка в планетарии: Jazz&Stars»",
+            "alias": "koncert-muzyka-v-planetarii-jazzstars",
+            "url": "/moscow/announcements/koncert-muzyka-v-planetarii-jazzstars?eventId=28619341",
+            "imageUrl": "https://live.mts.ru/image/536x360/koncert-muzyka-v-planetarii-jazzstars-24017161-4786-eae8-3dad-0c938e56feab.jpg",
+            "eventMinPrice": 3900,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-06-18T20:00:00",
+            "venue": {
+              "id": 560464,
+              "title": "Московский планетарий",
+              "url": "/moscow/venues/exhibition-hall/moskovskij-planetarij"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20245316,
+            "title": "Концерт Кая Метова на корабле",
+            "alias": "kay-metov-koncert-na-korable",
+            "url": "/moscow/announcements/kay-metov-koncert-na-korable?eventId=28529427",
+            "imageUrl": "https://live.mts.ru/image/536x360/kay-metov-koncert-na-korable-eb4d0b20-e90f-4661-b993-e8c9beb7bd6f.jpg",
+            "eventMinPrice": 3000,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-08-26T18:30:00",
+            "venue": {
+              "id": 3739846,
+              "title": "Теплоход «РИО-1» (Причал Северный речной вокзал, причал №1)",
+              "url": "/moscow/venues/drugoe/teplokhod-bilayner-prichal-severnyy-rechnoy-vokzal-prichal-1"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20256206,
+            "title": "Концерт Хора Сретенского Монастыря",
+            "alias": "04102026-khor-sretenskogo-monastyrya-gorekhovo-zuevo-kdc-zim",
+            "url": "/moscow/announcements/04102026-khor-sretenskogo-monastyrya-gorekhovo-zuevo-kdc-zim?eventId=28530601",
+            "imageUrl": "https://live.mts.ru/image/536x360/04102026-khor-sretenskogo-monastyrya-gorekhovo-zuevo-kdc-zim-31f9797f-132e-4725-b247-81e29fdd43a0.jpg",
+            "eventMinPrice": 2500,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-10-04T19:00:00",
+            "venue": {
+              "id": 4241196,
+              "title": "КДЦ «Зимний театр»",
+              "url": "/moscow/venues/dom-kultury/kdc-zimniy-teatr"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20256208,
+            "title": "Концерт Хора Сретенского Монастыря",
+            "alias": "21102026-khor-sretenskogo-monastyrya-gdubna-dk-oktyabr",
+            "url": "/moscow/announcements/21102026-khor-sretenskogo-monastyrya-gdubna-dk-oktyabr?eventId=28530602",
+            "imageUrl": "https://live.mts.ru/image/536x360/21102026-khor-sretenskogo-monastyrya-gdubna-dk-oktyabr-ef70d1b8-a838-493d-a099-d91c76b35348.jpg",
+            "eventMinPrice": 2400,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-10-21T19:00:00",
+            "venue": {
+              "id": 560801,
+              "title": "ДК Октябрь (Дубна)",
+              "url": "/moscow/venues/dom-kultury/dk-oktyabr-podolsk"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20245652,
+            "title": "Концерт хора Сретенского монастыря",
+            "alias": "khor-sretenskogo-monastyrya-gelektrostal-dk-imkmarksa",
+            "url": "/moscow/announcements/khor-sretenskogo-monastyrya-gelektrostal-dk-imkmarksa?eventId=28530598",
+            "imageUrl": "https://live.mts.ru/image/536x360/khor-sretenskogo-monastyrya-gelektrostal-dk-imkmarksa-cd008fb7-a60e-49fa-b20c-ec87a1634b5e.jpg",
+            "eventMinPrice": 2500,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-10-20T19:00:00",
+            "venue": {
+              "id": 561340,
+              "title": "ДК им. Карла Маркса (г. Электросталь)",
+              "url": "/moscow/venues/dom-kultury/dk-im-karla-marksa-g-elektrostal"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20246296,
+            "title": "Концерт Юрия Лозы",
+            "alias": "yuriy-loza-1",
+            "url": "/moscow/announcements/yuriy-loza-1?eventId=28498862",
+            "imageUrl": "https://live.mts.ru/image/536x360/yuriy-loza-1-5d8389c4-b063-42c6-a996-64a79a24f258.jpg",
+            "eventMinPrice": 5500,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-11-12T20:00:00",
+            "venue": {
+              "id": 1040205,
+              "title": "Ресторан «Petter»",
+              "url": "/moscow/venues/drugoe/restoran-petter"
+            },
+            "hasBlackFridayTag": false
+          }
+        ],
+        "total": 2226
+      },
+      "announcementPreviewCollectionByVenue": {
+        "id": -1,
+        "title": "Афиша <%= regionNameGenitive %>",
+        "alias": "ribbon",
+        "metaTitle": "Афиша <%= regionNameGenitive %> <%= date %> билеты на МТС Live",
+        "metaDescription": "Афиша интересных мероприятий <%= date %> в <%= regionNamePrepositional %>. Расписание концертов, спектаклей, мюзиклов, развлечений для детей. Билеты с кешбэком от 10% до 20% на МТС Лайв. <%= announcementsTotal %>",
+        "enableUserSort": false,
+        "filterIds": [
+          "Calendar"
+        ],
+        "defaultSortId": "Rating",
+        "imageUrl": "https://live.mts.ru/image/images/open_graph_collection_image.jpg",
+        "description": null,
+        "modelName": "live_sort",
+        "items": [
+          {
+            "like": false,
+            "id": 20004298,
+            "title": "Концерт группы «Руки Вверх!» «30 нам уже!»",
+            "alias": "ruki-vverkh-30-nam-uzhe",
+            "url": "/moscow/announcements/ruki-vverkh-30-nam-uzhe?eventId=28249451",
+            "imageUrl": "https://live.mts.ru/image/536x360/ruki-vverkh-30-nam-uzhe-0588fb1f-1ee2-6356-fd4f-807482c1c214.jpg",
+            "eventMinPrice": 3300,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-07-25T20:00:00",
+            "venue": {
+              "id": 559986,
+              "title": "Олимпийский Комплекс «Лужники»",
+              "url": "/moscow/venues/arena/bsa-luzhniki"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 19800047,
+            "title": "Концерт группы «КИНО»",
+            "alias": "gruppa-kino",
+            "url": "/moscow/announcements/gruppa-kino?eventId=27981667",
+            "imageUrl": "https://live.mts.ru/image/536x360/gruppa-kino-529830e6-a861-45e9-a092-64517d388ef0.jpg",
+            "eventMinPrice": 2000,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-06-21T19:00:00",
+            "venue": {
+              "id": 559986,
+              "title": "Олимпийский Комплекс «Лужники»",
+              "url": "/moscow/venues/arena/bsa-luzhniki"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 19862860,
+            "title": "Концерт Леонида Агутина",
+            "alias": "leonid-agutin-gmoskva",
+            "url": "/moscow/announcements/leonid-agutin-gmoskva?eventId=28082261",
+            "imageUrl": "https://live.mts.ru/image/536x360/leonid-agutin-gmoskva-a3205964-7eb8-9ea0-94e0-d6aa6ed8c555.jpg",
+            "eventMinPrice": 2500,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-07-18T19:00:00",
+            "venue": {
+              "id": 559986,
+              "title": "Олимпийский Комплекс «Лужники»",
+              "url": "/moscow/venues/arena/bsa-luzhniki"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 19094022,
+            "title": "Концерт группы «Звери»",
+            "alias": "koncert-gruppa-zveri",
+            "url": "/moscow/announcements/koncert-gruppa-zveri?eventId=28150844",
+            "imageUrl": "https://live.mts.ru/image/536x360/koncert-gruppa-zveri-3123c444-2e74-24ae-e025-392af08fb464.jpg",
+            "eventMinPrice": 2000,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-08-15T20:00:00",
+            "venue": {
+              "id": 559986,
+              "title": "Олимпийский Комплекс «Лужники»",
+              "url": "/moscow/venues/arena/bsa-luzhniki"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20459839,
+            "title": "Концерт Вани Дмитриенко",
+            "alias": "vanya-dmitrienko-1",
+            "url": "/moscow/announcements/vanya-dmitrienko-1?eventId=28785757",
+            "imageUrl": "https://live.mts.ru/image/536x360/vanya-dmitrienko-1-7c4378fd-3654-429a-a407-9319612e1fc7.jpg",
+            "eventMinPrice": 1200,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-08-02T20:00:00",
+            "venue": {
+              "id": 559986,
+              "title": "Олимпийский Комплекс «Лужники»",
+              "url": "/moscow/venues/arena/bsa-luzhniki"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 19761536,
+            "title": "Концерт Басты и Гуфа",
+            "alias": "basta-guf",
+            "url": "/moscow/announcements/basta-guf?eventId=28654812",
+            "imageUrl": "https://live.mts.ru/image/536x360/basta-guf-b39f8bad-b9d7-46d8-845c-622a973c5d9a.jpg",
+            "eventMinPrice": 7300,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-08-28T19:00:00",
+            "venue": {
+              "id": 559986,
+              "title": "Олимпийский Комплекс «Лужники»",
+              "url": "/moscow/venues/arena/bsa-luzhniki"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20261849,
+            "title": "Детская Футбольная Квест-экскурсия",
+            "alias": "detskaya-futbolnaya-kvest-ekskursiya-v-luzhnikakh-6-10-let",
+            "url": "/moscow/announcements/detskaya-futbolnaya-kvest-ekskursiya-v-luzhnikakh-6-10-let?eventId=28758183",
+            "imageUrl": "https://live.mts.ru/image/536x360/detskaya-futbolnaya-kvest-ekskursiya-v-luzhnikakh-6-10-let-0c699dfe-80e2-45cb-9544-d9f62ec76cf5.jpg",
+            "eventMinPrice": 7500,
+            "cashback": 0,
+            "eventClosestDateTime": "2026-06-28T13:00:00",
+            "venue": {
+              "id": 559986,
+              "title": "Олимпийский Комплекс «Лужники»",
+              "url": "/moscow/venues/arena/bsa-luzhniki"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20000758,
+            "title": "Юбилейный концерт Григория Лепса",
+            "alias": "grigoriy-leps-yubileynyy-koncert-65",
+            "url": "/moscow/announcements/grigoriy-leps-yubileynyy-koncert-65?eventId=28245978",
+            "imageUrl": "https://live.mts.ru/image/536x360/grigoriy-leps-yubileynyy-koncert-65-640e6aff-bc04-40ef-828c-2f28964a4a6c.jpg",
+            "eventMinPrice": 1500,
+            "cashback": 0,
+            "eventClosestDateTime": "2027-07-16T20:00:00",
+            "venue": {
+              "id": 559986,
+              "title": "Олимпийский Комплекс «Лужники»",
+              "url": "/moscow/venues/arena/bsa-luzhniki"
+            },
+            "hasBlackFridayTag": false
+          },
+          {
+            "like": false,
+            "id": 20226114,
+            "title": "Концерт «Легенды Дискотек»",
+            "alias": "legendy-diskotek",
+            "url": "/moscow/announcements/legendy-diskotek?eventId=28499233",
+            "imageUrl": "https://live.mts.ru/image/536x360/legendy-diskotek-73c59405-8af8-400d-b060-69e37a077f2b.jpg",
+            "eventMinPrice": 3500,
+            "cashback": 0,
+            "eventClosestDateTime": "2027-07-03T19:00:00",
+            "venue": {
+              "id": 559986,
+              "title": "Олимпийский Комплекс «Лужники»",
+              "url": "/moscow/venues/arena/bsa-luzhniki"
+            },
+            "hasBlackFridayTag": false
+          }
+        ],
+        "total": 9
+      },
+      "analyticsState": {
+        "pageViewYmEventParams": {
+          "eventCategory": "product_card",
+          "eventAction": "card_show",
+          "eventLabel": "product_card",
+          "eventContent": "product_card",
+          "eventContext": "2026-08-28T16:00:00",
+          "productName": "Концерт Басты и Гуфа",
+          "productId": 19761536,
+          "filterName": {
+            "widget": "mts"
+          }
+        }
+      },
+      "initialState": {
+        "Installations": null,
+        "Core": {
+          "region": {
+            "id": 35,
+            "name": "Москва",
+            "mtsNameGenitive": "Москвы",
+            "mtsNamePrepositional": "Москве",
+            "alias": "moscow",
+            "utcOffset": 3,
+            "position": 1
+          },
+          "menuSections": {
+            "header": [
+              {
+                "id": 1,
+                "title": "Все события",
+                "url": "/<%= regionAlias %>",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 38,
+                "title": "Кино",
+                "url": "https://live.mts.ru/cinema/?cityName=<%=regionAlias%>",
+                "isExternal": true,
+                "icon": "https://live.mts.ru/api/bff-sections/sections/38/icon",
+                "position": 3
+              },
+              {
+                "id": 10,
+                "title": "Спорт",
+                "url": "/<%= regionAlias%>/collections/sport",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 5,
+                "title": "Мюзиклы",
+                "url": "/<%= regionAlias%>/collections/musicals",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 3,
+                "title": "Спектакли",
+                "url": "/<%= regionAlias %>/collections/theater",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 21,
+                "title": "Стендап",
+                "url": "/<%= regionAlias%>/collections/standup",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 24,
+                "title": "МТС Live Холл",
+                "url": "/moscow/venues/concert-hall/mts-live-kholl-moskva",
+                "isExternal": false,
+                "icon": "https://live.mts.ru/api/bff-sections/sections/24/icon",
+                "position": 3
+              },
+              {
+                "id": 13,
+                "title": "Пушкинская карта",
+                "url": "/<%= regionAlias%>/collections/pushkin_card",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 12,
+                "title": "Подарочная карта",
+                "url": "/giftcard",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 7,
+                "title": "Фестивали",
+                "url": "/<%= regionAlias%>/collections/festivals",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 8,
+                "title": "Выставки",
+                "url": "/<%= regionAlias%>/collections/exhibitions",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 9,
+                "title": "Экскурсии",
+                "url": "/<%= regionAlias%>/collections/excursions",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 11,
+                "title": "Лайфстайл",
+                "url": "/lifestyle",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 2,
+                "title": "Концерты",
+                "url": "/<%= regionAlias%>/collections/concerts",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 6,
+                "title": "Шоу",
+                "url": "/<%= regionAlias%>/collections/show",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 4,
+                "title": "Детям",
+                "url": "/<%= regionAlias%>/collections/children",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              }
+            ],
+            "footer": [
+              {
+                "id": 1,
+                "title": "Все события",
+                "url": "/<%= regionAlias %>",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 38,
+                "title": "Кино",
+                "url": "https://live.mts.ru/cinema/?cityName=<%=regionAlias%>",
+                "isExternal": true,
+                "icon": "https://live.mts.ru/api/bff-sections/sections/38/icon",
+                "position": 3
+              },
+              {
+                "id": 10,
+                "title": "Спорт",
+                "url": "/<%= regionAlias%>/collections/sport",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 5,
+                "title": "Мюзиклы",
+                "url": "/<%= regionAlias%>/collections/musicals",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 3,
+                "title": "Спектакли",
+                "url": "/<%= regionAlias %>/collections/theater",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 21,
+                "title": "Стендап",
+                "url": "/<%= regionAlias%>/collections/standup",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 24,
+                "title": "МТС Live Холл",
+                "url": "/moscow/venues/concert-hall/mts-live-kholl-moskva",
+                "isExternal": false,
+                "icon": "https://live.mts.ru/api/bff-sections/sections/24/icon",
+                "position": 3
+              },
+              {
+                "id": 13,
+                "title": "Пушкинская карта",
+                "url": "/<%= regionAlias%>/collections/pushkin_card",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 12,
+                "title": "Подарочная карта",
+                "url": "/giftcard",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 7,
+                "title": "Фестивали",
+                "url": "/<%= regionAlias%>/collections/festivals",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 8,
+                "title": "Выставки",
+                "url": "/<%= regionAlias%>/collections/exhibitions",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 9,
+                "title": "Экскурсии",
+                "url": "/<%= regionAlias%>/collections/excursions",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 11,
+                "title": "Лайфстайл",
+                "url": "/lifestyle",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 14,
+                "title": "Все площадки",
+                "url": "/<%= regionAlias %>/venues",
+                "isExternal": false,
+                "icon": null,
+                "position": 2
+              },
+              {
+                "id": 15,
+                "title": "Пользовательское соглашение",
+                "url": "/users/agreement",
+                "isExternal": false,
+                "icon": null,
+                "position": 2
+              },
+              {
+                "id": 17,
+                "title": "Возврат билетов",
+                "url": "https://l.mts.ru/vozvrat-biletov",
+                "isExternal": true,
+                "icon": null,
+                "position": 2
+              },
+              {
+                "id": 18,
+                "title": "Поддержка",
+                "url": "https://support.mts.ru/mts_mts_live",
+                "isExternal": true,
+                "icon": null,
+                "position": 2
+              },
+              {
+                "id": 19,
+                "title": "Корпоративным клиентам",
+                "url": "https://corporatesales.live.mts.ru/",
+                "isExternal": true,
+                "icon": null,
+                "position": 2
+              },
+              {
+                "id": 22,
+                "title": "Организаторам",
+                "url": "https://b2b-live.mts.ru",
+                "isExternal": true,
+                "icon": null,
+                "position": 2
+              },
+              {
+                "id": 23,
+                "title": "Партнерская программа",
+                "url": "https://affiliates.live.mts.ru/",
+                "isExternal": true,
+                "icon": null,
+                "position": 2
+              },
+              {
+                "id": 20,
+                "title": "Рекомендательные технологии",
+                "url": "https://live.mts.ru/image/pdf/pravila-primeneniya-rekomendatelnyh-tekhnologii-mts-laiv.pdf",
+                "isExternal": true,
+                "icon": null,
+                "position": 2
+              },
+              {
+                "id": 2,
+                "title": "Концерты",
+                "url": "/<%= regionAlias%>/collections/concerts",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 6,
+                "title": "Шоу",
+                "url": "/<%= regionAlias%>/collections/show",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              },
+              {
+                "id": 4,
+                "title": "Детям",
+                "url": "/<%= regionAlias%>/collections/children",
+                "isExternal": false,
+                "icon": null,
+                "position": 3
+              }
+            ]
+          },
+          "tnpsQuestionnaireOptionsList": [
+            {
+              "eventId": "event_24f682b8-9e2d-4dcc-b8e4-bc1036c08ff8",
+              "sessionKey": "TNPS_QUESTIONNAIRE_DEFAULT_POPUP_HIDDEN",
+              "popupType": "primary_fixed",
+              "title": "Как вам МТС Live?",
+              "disabled": false,
+              "trigger": null,
+              "zIndex": 10000,
+              "refresh": false
+            },
+            {
+              "eventId": "event_7909c2af-c77f-4f47-a5f4-be9caf795b06",
+              "sessionKey": null,
+              "popupType": "secondary_fixed",
+              "title": "Как прошла покупка?",
+              "disabled": true,
+              "trigger": "ShoppingTicketlandBuyTicket",
+              "zIndex": 10001,
+              "refresh": false
+            }
+          ],
+          "csatQuestionnaireOptions": {
+            "uuid": "d1c6b66d-8fa7-5e1d-a4d1-9bcdae53ba68",
+            "trigger": "ShoppingWidgetOrderCompletedSuccessfully",
+            "disabled": false
+          }
+        },
+        "Identity": {
+          "profile": {
+            "msisdn": "",
+            "email": "",
+            "firstName": "",
+            "middleName": "",
+            "lastName": "",
+            "customerProfileId": "83799cc0-2e11-4dcb-8a79-509746fc49e6",
+            "customerId": "",
+            "customerRoleType": "guest",
+            "mtsId": "",
+            "isPremium": false,
+            "customerSegments": "guest"
+          }
+        },
+        "User": {
+          "policyAccepted": false,
+          "policyAcceptedPopupLoadingEnabled": true,
+          "cashbackSpendingPopupLoadingEnabled": false,
+          "subscriptionPopupLoadingEnabled": false
+        },
+        "Announcements": {
+          "loadingAnnouncementDetails": false,
+          "announcementDetailsMeta": {
+            "heading1": "Концерт Басты и Гуфа",
+            "heading2": "Расписание",
+            "title": "Концерт Басты и Гуфа, Олимпийский Комплекс «Лужники» в Москве - купить билеты на MTC Live",
+            "description": "Концерт Басты и Гуфа в Москве, Олимпийский Комплекс «Лужники». Описание, даты проведения и фотографии на МТС Live."
+          },
+          "announcementDetails": {
+            "id": 19761536,
+            "alias": "basta-guf",
+            "title": "Концерт Басты и Гуфа",
+            "description": "<p>28 августа 2026 года на Большой спортивной арене «Лужники» состоится совместный концерт Басты и Гуфа. На следующий день, 29 августа, на стадионе выступит Баста — с большим сольным концертом с участием гостей.</p><p>Сейчас музыканты готовят новый альбом, который представят на самом масштабном стадионе Восточной Европы уже следующим летом. Будущая пластинка является одной из самых ожидаемых коллабораций уже много лет. Первый совместный релиз артисты выпустили в 2010 году. Треки с него вошли в топ музыкальных чартов и остаются классикой жанра до сих пор.</p><p>В 2024 году артисты впервые заявили о работе над новым альбомом. В шоу «ВПИСКА» к 20-летию творческого объединения Газголдер Гуф вспоминает: «Мы не рассчитывали, что наш первый альбом станет культовым. Сделали его буквально за месяц. Тему задавал Вася. Он говорил, что у него есть куплет и припев, дальше я ехал домой и как школьник делал домашнее задание. Потом приезжал на Газ и мы записывались».</p><p>Идея выпуска второго совместного альбома также принадлежит Басте. Фрагмент одного из новых треков звучит во ВПИСКЕ. «Нам на двоих 90 лет. У нас куплеты друг про друга и это до слез. Два типа — и не друзья, и не близкие, а просто люди, которые знают друг друга, как никто другой. Об этом песня. Трогательная история», — рассказывает Баста.</p><p>Летом 2025 Гуф принял участие в двух концертах Басты в «Лужниках», которые посетили 144 тысячи человек — очередной рекорд в творческой биографии Басты. Выход Гуфа на совместном треке «Моя игра» стал одним из самых эмоциональных моментов шоу.</p><p>На совместном выступлении летом 2026 артисты исполнят абсолютно новые треки и обязательно классику из первого альбома «Баста / Гуф». На своем сольном концерте Баста споет все хиты и свежие треки, которые готовятся к релизам.</p>",
+            "shortDescription": null,
+            "status": "TicketsOnSale",
+            "premiumRule": "All",
+            "dataSourceId": 6,
+            "dataSourceItemId": "6661874",
+            "cashback": 0,
+            "organizer": "ООО \"КОНЦЕРТНОЕ АГЕНТСТВО \"ЗРИТЕЛЬ\"\" ИНН: 9703211812",
+            "lastEventDateTime": "2026-08-28T16:00:00",
+            "eventClosestDateTime": "2026-08-28T16:00:00",
+            "hasPrivileges": false,
+            "venue": {
+              "address": "г. Москва, Лужники, д. 24с1",
+              "id": 559986,
+              "title": "Олимпийский Комплекс «Лужники»",
+              "url": "https://live.mts.ru/moscow/venues/arena/bsa-luzhniki"
+            },
+            "like": false,
+            "likeTotal": 72,
+            "url": "https://live.mts.ru/moscow/announcements/basta-guf",
+            "category": {
+              "id": 4,
+              "title": "Концерты",
+              "alias": "concerts",
+              "url": ""
+            },
+            "tags": [
+              {
+                "title": "18+",
+                "url": null
+              }
+            ],
+            "promoText": null,
+            "privileges": [],
+            "banner": null,
+            "media": [
+              {
+                "type": "poster",
+                "url": "https://ponominalu.ru/media/i/536x360/bc-8e-bc8e3221b0acb70fc35b7d5b687881e8.jpg"
+              },
+              {
+                "type": "gallery",
+                "url": "https://ponominalu.ru/media/i/1338x892/bc-8e-bc8e3221b0acb70fc35b7d5b687881e8.jpg"
+              }
+            ],
+            "saleRule": "AllowedAll",
+            "eventMinPrice": 7300,
+            "isNativeWidget": true,
+            "hasBlackFridayTag": false,
+            "isShowMRS": true
+          }
+        },
+        "Composite": null,
+        "Schedule": null,
+        "Orders": null,
+        "Promotion": null,
+        "Articles": {
+          "loading": false
+        },
+        "Venues": null,
+        "Persons": {
+          "personGalleryCollection": {
+            "total": 1,
+            "items": [
+              {
+                "id": 2253376,
+                "title": "Баста",
+                "alias": "basta",
+                "imageUrl": "https://ponominalu.ru/media/library/original/person-2253376-1.jpg",
+                "url": "/persons/basta",
+                "roles": [
+                  {
+                    "title": "Певец",
+                    "groupTitle": "Певцы"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "Filters": null,
+        "Reviews": {
+          "isTheaterReviews": false
+        },
+        "Wishlist": null,
+        "Shopping": null,
+        "PromoActions": null
+      },
+      "environmentDynamicState": {
+        "splitTests": {
+          "feature_test": "enabled",
+          "feature_disable_premium_page": "enabled",
+          "favorites_authorization_banner": "favorites_authorization_banner_enabled",
+          "order_refund": "order_refund_is_enabled",
+          "feature_order_page": "enabled",
+          "feature_order_page_related_recommendations": "enabled",
+          "tnps_afisha": "tnps_afisha_pink",
+          "shopping_widget": "shopping_widget_is_enabled",
+          "AA": "aa_2",
+          "sticky_header": "sticky_header_disabled",
+          "eventpage_like_button_big_count": "with_like_count"
+        }
+      },
+      "authState": {
+        "registrationHasOccurred": false,
+        "authorizationHasOccurred": false
+      },
+      "_sentryTraceData": "4d00f47093c5e4e5010931bf38c70d54-83af6e74ee2e2770-1",
+      "_sentryBaggage": "sentry-environment=Production,sentry-release=v4.16.4,sentry-public_key=76d79b38fec6482cabbbdd17c7bf1ccb,sentry-trace_id=4d00f47093c5e4e5010931bf38c70d54,sentry-transaction=GET%20%2F%5BregionAlias%5D%2Fannouncements%2F%5Balias%5D,sentry-sampled=true,sentry-sample_rand=0.227071644708289,sentry-sample_rate=0.3"
+    },
+    "__N_SSP": true
+  },
+  "page": "/[regionAlias]/announcements/[alias]",
+  "query": {
+    "eventId": "28754837",
+    "regionAlias": "moscow",
+    "alias": "basta-guf"
+  },
+  "buildId": "E9iWgMrdlekTQDMBkQLyJ",
+  "runtimeConfig": {
+    "primaryEndpoint": "https://live.mts.ru",
+    "apiEndpoint": "https://live.mts.ru/api",
+    "localEndpoint": "http://localhost:3000",
+    "mocksApiEndpoint": "https://live.mts.ru/fapi/__mocks__",
+    "validationEnabled": false,
+    "apiPlatformPrefix": "/web/entertainment",
+    "developmentApiProxyEndpoint": "",
+    "apiPerformanceEnabled": false,
+    "devtools": false,
+    "version": "v4.16.4",
+    "sentryDsn": "https://76d79b38fec6482cabbbdd17c7bf1ccb@sentry.live.mts.ru/6",
+    "sentryEnabled": true,
+    "environment": "Production",
+    "isDevelopment": false,
+    "isStaging": false,
+    "isPSI": false,
+    "isProduction": true,
+    "isDevNodeEnv": false,
+    "ticketlandAccessHash": "Daug8OjDyobshos6",
+    "ticketlandRCAccessHash": "YkBUaigT875aIIXvoUFC4hPiuViMCXgP",
+    "logLevel": "warn",
+    "seatmapPublicKey": "228aead0-9289-4443-af0d-c2243bc00417",
+    "accessRequestCorsHashParameter": "",
+    "salesNinjaPublicKey": "850bf4a3-8572-45a7-97ec-5407832c6490",
+    "appsFlyerPublicKey": "ef600d23-ebf9-4699-b554-59d8c57d3bc3",
+    "vkRetargetingPublicKey": "VK-RTRG-1846324-1bJzm",
+    "mailRuPublicId": "3479458ё",
+    "yandexMetrikaId": "69063460"
+  },
+  "isFallback": false,
+  "isExperimentalCompile": false,
+  "dynamicIds": [
+    65520,
+    19629,
+    65436,
+    89383,
+    3004,
+    96812,
+    33108,
+    83400
+  ],
+  "gssp": true,
+  "scriptLoader": []
+}

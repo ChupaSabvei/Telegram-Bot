@@ -5,8 +5,9 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 
-from src.bot.formatters.events import format_main_menu
-from src.bot.keyboards.menus import category_keyboard, city_keyboard
+from src.bot.handlers.navigation import open_main_menu
+from src.bot.keyboards.main_menu import main_menu_keyboard, main_menu_text
+from src.bot.keyboards.menus import city_keyboard
 from src.bot.states import BotStates
 from src.storage.database import build_runtime
 from src.storage.repositories.users import UserSettingsRepository
@@ -14,17 +15,22 @@ from src.storage.repositories.users import UserSettingsRepository
 router = Router()
 
 
-@router.callback_query(F.data == "back:settings")
-async def open_settings(callback: CallbackQuery, state: FSMContext) -> None:
-    await state.set_state(BotStates.SETTINGS_CITY)
-    await callback.message.edit_text("Выберите новый город.", reply_markup=city_keyboard())
-    await callback.answer()
-
-
 @router.message(Command("settings"))
 async def cmd_settings(message: Message, state: FSMContext) -> None:
     await state.set_state(BotStates.SETTINGS_CITY)
-    await message.answer("Выберите новый город.", reply_markup=city_keyboard())
+    await message.answer("Выберите новый город.", reply_markup=city_keyboard(include_back=True))
+
+
+@router.callback_query(F.data.in_({"settings:open", "back:settings"}))
+async def open_settings(callback: CallbackQuery, state: FSMContext) -> None:
+    await state.set_state(BotStates.SETTINGS_CITY)
+    await callback.message.edit_text("Выберите новый город.", reply_markup=city_keyboard(include_back=True))
+    await callback.answer()
+
+
+@router.callback_query(BotStates.SETTINGS_CITY, F.data == "settings:back")
+async def back_from_settings(callback: CallbackQuery, state: FSMContext) -> None:
+    await open_main_menu(callback, state)
 
 
 @router.callback_query(BotStates.SETTINGS_CITY, F.data.startswith("city:"))
@@ -33,8 +39,11 @@ async def update_city_from_settings(callback: CallbackQuery, state: FSMContext) 
     runtime = build_runtime()
     async with runtime.session_factory() as session:
         repo = UserSettingsRepository(session)
-        await repo.upsert_city(callback.from_user.id, city_slug)
+        user = await repo.upsert_city(callback.from_user.id, city_slug)
         await session.commit()
     await state.set_state(BotStates.MAIN_MENU)
-    await callback.message.edit_text(format_main_menu(city_slug), reply_markup=category_keyboard())
-    await callback.answer("Город обновлен")
+    await callback.message.edit_text(
+        main_menu_text(city_slug, user.selected_date),
+        reply_markup=main_menu_keyboard(),
+    )
+    await callback.answer("Город обновлён")

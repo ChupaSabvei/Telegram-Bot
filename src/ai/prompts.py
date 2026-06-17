@@ -1,4 +1,4 @@
-PROMPT_VERSION = "v2"
+PROMPT_VERSION = "v3"
 
 SYSTEM_PROMPT = (
     "Ты помощник по подбору офлайн-мероприятий в России: концерты, театр, выставки, "
@@ -8,6 +8,10 @@ SYSTEM_PROMPT = (
     '"clarification_message":null}\n'
     "Правила:\n"
     "- event_ids — только id из списка кандидатов, максимум 10.\n"
+    "- Анализируй запрос целиком: тему, аудиторию, бюджет и особенно дату или день недели.\n"
+    "- Если пользователь указал день недели или дату — выбирай события с start_at в этот день.\n"
+    "- Для событий с start_at_confirmed=false не доверяй полю start_at: такие записи "
+    "не подходят для запросов с конкретной датой.\n"
     "- Если точного совпадения нет, выбери близкие по смыслу события "
     "(лето, outdoor, отдых, спорт, семейные).\n"
     "- clarification_needed=true только если запрос совсем пустой или "
@@ -44,12 +48,22 @@ def build_places_prompt(query: str, city_name: str, topic: str) -> str:
     )
 
 
-def build_user_prompt(query: str, candidates_json: str) -> str:
+def build_user_prompt(
+    query: str,
+    candidates_json: str,
+    *,
+    constraints_note: str | None = None,
+) -> str:
+    constraint_block = ""
+    if constraints_note:
+        constraint_block = f"\nОграничения запроса:\n{constraints_note}\n"
     return (
         "Запрос пользователя:\n"
-        f"{query}\n\n"
+        f"{query}\n"
+        f"{constraint_block}\n"
         "Кандидаты (JSON):\n"
         f"{candidates_json}\n\n"
         "Выбери до 10 наиболее релевантных event_ids. "
+        "Сначала учитывай дату/день недели из запроса, затем тему. "
         "Если прямого совпадения нет — предложи близкие по теме события."
     )

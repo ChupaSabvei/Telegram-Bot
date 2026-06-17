@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, datetime, timedelta, timezone
 
 import pytest
 
@@ -8,7 +8,7 @@ from src.ai.ranker import AIRanker, EventCandidate, RankRequest
 
 
 class HappyClient:
-    async def rank(self, query: str, candidates: list[dict]):  # noqa: ARG002
+    async def rank(self, query: str, candidates: list[dict], **kwargs):  # noqa: ARG002
         class R:
             event_ids = [candidates[0]["id"]]
             clarification_needed = False
@@ -18,7 +18,7 @@ class HappyClient:
 
 
 class ClarifyClient:
-    async def rank(self, query: str, candidates: list[dict]):  # noqa: ARG002
+    async def rank(self, query: str, candidates: list[dict], **kwargs):  # noqa: ARG002
         class R:
             event_ids = []
             clarification_needed = True
@@ -28,7 +28,7 @@ class ClarifyClient:
 
 
 class FailingClient:
-    async def rank(self, query: str, candidates: list[dict]):  # noqa: ARG002
+    async def rank(self, query: str, candidates: list[dict], **kwargs):  # noqa: ARG002
         raise RuntimeError("LLM down")
 
 
@@ -92,11 +92,62 @@ async def test_ai_ranker_fallback_broad_query() -> None:
 
 
 @pytest.mark.asyncio
+async def test_ai_ranker_fallback_scored_returns_string_ids() -> None:
+    ranker = AIRanker(llm_client=FailingClient())  # type: ignore[arg-type]
+    result = await ranker.rank(
+        RankRequest(
+            query="спортивное мероприятие для одного",
+            city_slug="moscow",
+            candidates=make_candidates(),
+        )
+    )
+    assert result.event_ids
+    assert all(isinstance(event_id, str) for event_id in result.event_ids)
+
+
+@pytest.mark.asyncio
+async def test_ai_ranker_filters_by_weekday_in_fallback() -> None:
+    tuesday = datetime(2026, 6, 16, 19, 0, tzinfo=UTC)
+    wednesday = datetime(2026, 6, 17, 19, 0, tzinfo=UTC)
+    candidates = [
+        EventCandidate(
+            id="tuesday",
+            title="Джazz во вторник",
+            description="Концерт",
+            category_slug="concerts",
+            start_at=tuesday,
+            venue="Клуб",
+            price_text="1000",
+            start_at_confirmed=True,
+        ),
+        EventCandidate(
+            id="wednesday",
+            title="Театр",
+            description="Спектакль",
+            category_slug="theater",
+            start_at=wednesday,
+            venue="Театр",
+            price_text="800",
+            start_at_confirmed=True,
+        ),
+    ]
+    ranker = AIRanker(llm_client=FailingClient())  # type: ignore[arg-type]
+    result = await ranker.rank(
+        RankRequest(
+            query="Найди мне мероприятия во вторник",
+            city_slug="moscow",
+            candidates=candidates,
+        )
+    )
+    assert result.fallback_used
+    assert result.event_ids == ["tuesday"]
+
+
+@pytest.mark.asyncio
 async def test_ai_ranker_fallback_weekend_broad_query() -> None:
     now = datetime.now(tz=UTC)
     days_until_saturday = (5 - now.weekday()) % 7
     saturday = now + timedelta(days=days_until_saturday)
-    sunday = saturday + timedelta(days=1)
     candidates = [
         EventCandidate(
             id="weekend-1",

@@ -10,19 +10,6 @@ from pydantic import BaseModel, ConfigDict, Field, HttpUrl, field_validator
 class CitySlug(StrEnum):
     MOSCOW = "moscow"
     SPB = "spb"
-    NOVOSIBIRSK = "novosibirsk"
-    YEKATERINBURG = "yekaterinburg"
-    KAZAN = "kazan"
-    NIZHNY_NOVGOROD = "nizhny_novgorod"
-    CHELYABINSK = "chelyabinsk"
-    SAMARA = "samara"
-    OMSK = "omsk"
-    ROSTOV_ON_DON = "rostov_on_don"
-    UFA = "ufa"
-    KRASNOYARSK = "krasnoyarsk"
-    VORONEZH = "voronezh"
-    PERM = "perm"
-    VOLGOGRAD = "volgograd"
 
 
 CATEGORY_SLUGS = (
@@ -34,11 +21,40 @@ CATEGORY_SLUGS = (
     "other",
 )
 
-SOURCE_SLUGS = ("yandex_afisha", "kudago")
+ACTIVITY_SLUGS = ("sport", "kids", "family", "culture", "gastro", "relax")
+VENUE_FORMATS = ("indoor", "outdoor", "mixed", "online", "unknown")
+AUDIENCE_TAGS = ("solo", "couple", "family", "friends", "kids")
+
+SOURCE_SLUGS = (
+    "yandex_afisha",
+    "kudago",
+    "timepad",
+    "mts_live",
+    "tbank_gorod",
+    "mos_kultura",
+    "timeout_msk",
+    "mos_sport_rayon",
+    "mtpp",
+    "telegram_channels",
+)
 
 PriceType = Literal["free", "paid", "unknown"]
 CategorySlug = Literal["concerts", "exhibitions", "theater", "sport", "education", "other"]
-SourceSlug = Literal["yandex_afisha", "kudago"]
+ActivitySlug = Literal["sport", "kids", "family", "culture", "gastro", "relax"]
+VenueFormat = Literal["indoor", "outdoor", "mixed", "online", "unknown"]
+AudienceTag = Literal["solo", "couple", "family", "friends", "kids"]
+SourceSlug = Literal[
+    "yandex_afisha",
+    "kudago",
+    "timepad",
+    "mts_live",
+    "tbank_gorod",
+    "mos_kultura",
+    "timeout_msk",
+    "mos_sport_rayon",
+    "mtpp",
+    "telegram_channels",
+]
 
 
 class EventDTO(BaseModel):
@@ -48,13 +64,21 @@ class EventDTO(BaseModel):
     title: str = Field(min_length=1, max_length=500)
     description: str | None = None
     category_slug: CategorySlug
+    activity_slug: ActivitySlug | None = None
     city_slug: str
     venue: str | None = None
+    address: str | None = None
     start_at: datetime
+    start_at_confirmed: bool = True
+    session_starts_at: list[datetime] = Field(default_factory=list)
     end_at: datetime | None = None
     price_type: PriceType = "unknown"
     price_text: str | None = None
-    is_online: Literal[False] = False
+    price_amount_rub: int | None = Field(default=None, ge=0)
+    venue_format: VenueFormat = "unknown"
+    audience_tags: list[AudienceTag] = Field(default_factory=list)
+    is_online: bool = False
+    popularity_score: int = Field(default=0, ge=0)
     image_url: HttpUrl | None = None
 
     model_config = ConfigDict(extra="forbid")
@@ -70,6 +94,18 @@ class EventDTO(BaseModel):
             return value.replace(tzinfo=UTC)
         return value.astimezone(UTC)
 
+    @field_validator("session_starts_at", mode="before")
+    @classmethod
+    def normalize_sessions(cls, value: list | None) -> list[datetime]:
+        if not value:
+            return []
+        normalized: list[datetime] = []
+        for item in value:
+            parsed = cls.normalize_dt(item)
+            if parsed is not None:
+                normalized.append(parsed)
+        return normalized
+
     @field_validator("city_slug")
     @classmethod
     def validate_city_slug(cls, value: str) -> str:
@@ -78,9 +114,9 @@ class EventDTO(BaseModel):
             raise ValueError(f"Unsupported city_slug: {value}")
         return value
 
-    @field_validator("venue")
+    @field_validator("venue", "address")
     @classmethod
-    def strip_venue(cls, value: str | None) -> str | None:
+    def strip_optional(cls, value: str | None) -> str | None:
         if value is None:
             return value
         cleaned = value.strip()

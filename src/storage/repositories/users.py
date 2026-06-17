@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -31,6 +31,19 @@ class UserSettingsRepository:
             existing.updated_at = datetime.now(tz=UTC)
         await self.session.flush()
         return existing
+
+    async def set_selected_date(
+        self,
+        telegram_id: int,
+        selected_date: date | None,
+    ) -> UserSettings | None:
+        user = await self.get(telegram_id)
+        if user is None:
+            return None
+        user.selected_date = selected_date
+        user.updated_at = datetime.now(tz=UTC)
+        await self.session.flush()
+        return user
 
     async def list_completed(self) -> list[UserSettings]:
         result = await self.session.scalars(

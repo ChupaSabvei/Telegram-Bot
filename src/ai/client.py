@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from openai import AsyncOpenAI
 
 from src.ai.prompts import PLACES_SYSTEM_PROMPT, SYSTEM_PROMPT, build_places_prompt, build_user_prompt
+from src.ai.query_constraints import QueryConstraints
 
 
 @dataclass(slots=True)
@@ -37,10 +38,21 @@ class OpenAIClient:
             kwargs["base_url"] = base_url
         self.client = AsyncOpenAI(**kwargs)
 
-    async def rank(self, query: str, candidates: list[dict]) -> LLMResponse:
+    async def rank(
+        self,
+        query: str,
+        candidates: list[dict],
+        *,
+        constraints: QueryConstraints | None = None,
+    ) -> LLMResponse:
+        constraints_note = None
+        if constraints and constraints.target_dates:
+            dates = ", ".join(sorted(day.isoformat() for day in constraints.target_dates))
+            constraints_note = f"Нужны события на даты: {dates} (по московскому времени)."
         payload = build_user_prompt(
             query=query,
             candidates_json=json.dumps(candidates, ensure_ascii=False),
+            constraints_note=constraints_note,
         )
         response = await self.client.chat.completions.create(
             model=self.model,

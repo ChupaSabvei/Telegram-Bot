@@ -1,0 +1,9 @@
+{
+	"id": "XsDtTysxHC5oEZY",
+	"json": "{\"id\":\"XsDtTysxHC5oEZY\",\"url\":\"https://mostpp.ru/events/\",\"loadedUrl\":\"https://mostpp.ru/events/\",\"uniqueKey\":\"https://mostpp.ru/events/-1781492958889\",\"method\":\"GET\",\"noRetry\":false,\"retryCount\":0,\"errorMessages\":[],\"headers\":{\"User-Agent\":\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\",\"Accept\":\"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\",\"Accept-Language\":\"ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7\",\"Referer\":\"https://mostpp.ru\"},\"userData\":{\"__crawlee\":{\"state\":4}},\"handledAt\":\"2026-06-15T03:09:19.972Z\"}",
+	"method": "GET",
+	"orderNo": null,
+	"retryCount": 0,
+	"uniqueKey": "https://mostpp.ru/events/-1781492958889",
+	"url": "https://mostpp.ru/events/"
+}
