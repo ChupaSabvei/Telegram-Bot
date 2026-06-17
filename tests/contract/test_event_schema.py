@@ -10,7 +10,7 @@ from src.storage.schemas import EventDTO
 
 
 def test_event_dto_matches_contract_schema() -> None:
-    schema_path = Path("specs/001-ai-event-discovery/contracts/event-schema.json")
+    schema_path = Path("specs/002-multi-source-survey-flow/contracts/event-schema-v2.json")
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
     validator = Draft7Validator(schema)
 

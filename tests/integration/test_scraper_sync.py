@@ -13,6 +13,7 @@ from src.storage.schemas import EventDTO
 class DummyScraper:
     slug = "kudago"
     name = "Dummy"
+    supported_cities = ("moscow",)
 
     async def fetch_events(self, city_slug: str) -> list[EventDTO]:
         start_at = datetime.now(tz=UTC) + timedelta(days=2)

@@ -9,6 +9,7 @@ from src.storage.schemas import EventDTO
 class ScraperProtocol(Protocol):
     slug: str
     name: str
+    supported_cities: tuple[str, ...]
 
     async def fetch_events(self, city_slug: str) -> list[EventDTO]:
         """Fetch normalized events for one city and never raise."""

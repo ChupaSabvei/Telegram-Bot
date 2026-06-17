@@ -55,3 +55,41 @@ async def test_dedup_assigns_group_for_similar_events(tmp_path) -> None:
 
         assert first.dedup_group_id is not None
         assert second.dedup_group_id == first.dedup_group_id
+
+
+@pytest.mark.asyncio
+async def test_dedup_skips_empty_venue_title_only_match(tmp_path) -> None:
+    db_path = tmp_path / "dedup-empty-venue.db"
+    runtime = build_runtime(f"sqlite+aiosqlite:///{db_path}")
+    await init_db(runtime)
+    await seed_defaults(runtime)
+
+    start_at = datetime.now(tz=UTC) + timedelta(days=5)
+    async with runtime.session_factory() as session:
+        repo = EventRepository(session)
+        first = await repo.upsert_event(
+            EventDTO(
+                source_url="https://example.com/yandex/1",
+                source_slug="yandex_afisha",
+                title="Rec Gran Pri Sportsa",
+                category_slug="sport",
+                city_slug="moscow",
+                start_at=start_at,
+                venue_format="indoor",
+            )
+        )
+        second = await repo.upsert_event(
+            EventDTO(
+                source_url="https://example.com/tbank/1",
+                source_slug="tbank_gorod",
+                title="Rec Gran Pri Sport Fest",
+                category_slug="sport",
+                city_slug="moscow",
+                start_at=start_at,
+                venue_format="indoor",
+            )
+        )
+        await session.commit()
+
+    assert first.dedup_group_id is None
+    assert second.dedup_group_id is None

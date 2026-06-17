@@ -2,14 +2,22 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, datetime, timedelta, timezone
 
 from rapidfuzz import fuzz
 
 from src.ai.client import OpenAIClient
 from src.ai.prompts import PROMPT_VERSION
+from src.ai.query_constraints import (
+    event_matches_constraints,
+    is_weekend_query,
+    parse_query_constraints,
+    upcoming_weekend_dates,
+)
 
 logger = logging.getLogger(__name__)
+
+MSK = timezone(timedelta(hours=3))
 
 MAX_LLM_CANDIDATES = 25
 MAX_DESCRIPTION_LEN = 120
@@ -36,6 +44,7 @@ class EventCandidate:
     start_at: datetime
     venue: str | None
     price_text: str | None
+    start_at_confirmed: bool = True
 
 
 @dataclass(slots=True)
@@ -84,6 +93,7 @@ class AIRanker:
             llm_result = await self.llm_client.rank(
                 query=req.query,
                 candidates=self._compact_for_llm(llm_candidates),
+                constraints=parse_query_constraints(req.query),
             )
             ids = [item.id for item in req.candidates]
             filtered = [event_id for event_id in llm_result.event_ids if event_id in ids][:10]
@@ -135,10 +145,14 @@ class AIRanker:
         )
 
     def _select_llm_candidates(self, req: RankRequest) -> list[EventCandidate]:
-        candidates = list(req.candidates)
+        candidates = self._apply_query_constraints(req.candidates, req.query)
         if _is_weekend_query(req.query):
-            weekend_days = _upcoming_weekend_days(datetime.now(tz=UTC))
-            weekend_events = [item for item in candidates if item.start_at.date() in weekend_days]
+            weekend_days = upcoming_weekend_dates()
+            weekend_events = [
+                item
+                for item in candidates
+                if item.start_at.astimezone(MSK).date() in weekend_days
+            ]
             if weekend_events:
                 candidates = weekend_events
 
@@ -149,6 +163,36 @@ class AIRanker:
         if scored:
             return [item for item, _ in scored[:MAX_LLM_CANDIDATES]]
         return candidates[:MAX_LLM_CANDIDATES]
+
+    def _apply_query_constraints(
+        self,
+        candidates: list[EventCandidate],
+        query: str,
+    ) -> list[EventCandidate]:
+        constraints = parse_query_constraints(query)
+        if not constraints.target_dates:
+            return candidates
+
+        matched = [
+            item
+            for item in candidates
+            if event_matches_constraints(
+                item.start_at,
+                start_at_confirmed=item.start_at_confirmed,
+                constraints=constraints,
+            )
+        ]
+        if matched:
+            return matched
+
+        if constraints.target_dates:
+            return [
+                item
+                for item in candidates
+                if item.start_at.astimezone(MSK).date() in constraints.target_dates
+            ]
+
+        return candidates
 
     def _compact_for_llm(self, candidates: list[EventCandidate]) -> list[dict]:
         compact: list[dict] = []
@@ -163,6 +207,7 @@ class AIRanker:
                     "description": description or None,
                     "category_slug": item.category_slug,
                     "start_at": item.start_at.strftime("%Y-%m-%d %H:%M"),
+                    "start_at_confirmed": item.start_at_confirmed,
                     "venue": (item.venue or "")[:60] or None,
                     "price_text": (item.price_text or "")[:40] or None,
                 }
@@ -171,19 +216,23 @@ class AIRanker:
 
     def _fallback_rank(self, req: RankRequest) -> list[str]:
         query = req.query.lower().strip()
+        candidates = self._apply_query_constraints(req.candidates, req.query)
+        constraints = parse_query_constraints(req.query)
+        if constraints.target_dates and not candidates:
+            return []
         if _is_weekend_query(query) or _is_broad_query(query):
-            weekend_ids = self._weekend_event_ids(req.candidates)
+            weekend_ids = self._weekend_event_ids(candidates)
             if weekend_ids:
                 return weekend_ids
-            return [item.id for item in sorted(req.candidates, key=lambda x: x.start_at)[:10]]
+            return [item.id for item in sorted(candidates, key=lambda x: x.start_at)[:10]]
 
-        scored = self._score_candidates(query, req.candidates, min_score=30)
-        return [event_id for event_id, _ in scored]
+        scored = self._score_candidates(query, candidates, min_score=30)
+        return [item.id for item, _ in scored]
 
     def _weekend_event_ids(self, candidates: list[EventCandidate]) -> list[str]:
-        weekend_days = _upcoming_weekend_days(datetime.now(tz=UTC))
+        weekend_days = upcoming_weekend_dates()
         weekend_events = sorted(
-            (item for item in candidates if item.start_at.date() in weekend_days),
+            (item for item in candidates if item.start_at.astimezone(MSK).date() in weekend_days),
             key=lambda item: item.start_at,
         )
         return [item.id for item in _diverse_sample(weekend_events, limit=10)]
@@ -194,22 +243,39 @@ class AIRanker:
         candidates: list[EventCandidate],
         min_score: float = 40,
     ) -> list[tuple[EventCandidate, float]]:
+        constraints = parse_query_constraints(query)
         scored: list[tuple[EventCandidate, float]] = []
         for item in candidates:
             content = " ".join([item.title, item.description or "", item.category_slug]).lower()
-            score = fuzz.token_set_ratio(query, content)
+            score = float(fuzz.token_set_ratio(query, content))
+            if constraints.target_dates:
+                if item.start_at.astimezone(MSK).date() in constraints.target_dates:
+                    score += 35
+                else:
+                    score -= 25
+            if item.start_at_confirmed:
+                score += 8
+            if _looks_like_social_noise(item.title):
+                score -= 30
             if score >= min_score:
                 scored.append((item, score))
         scored.sort(key=lambda pair: pair[1], reverse=True)
         return scored
 
 
+def _looks_like_social_noise(title: str) -> bool:
+    lowered = title.lower()
+    noise_tokens = ("подпиш", "фото:", "max.ru", " telega.in", " по всем вопросам")
+    return any(token in lowered for token in noise_tokens)
+
+
 def _is_weekend_query(query: str) -> bool:
-    lowered = query.lower()
-    return any(keyword in lowered for keyword in WEEKEND_KEYWORDS)
+    return is_weekend_query(query)
 
 
 def _is_broad_query(query: str) -> bool:
+    if parse_query_constraints(query).target_dates:
+        return False
     lowered = query.lower()
     return any(keyword in lowered for keyword in BROAD_QUERY_KEYWORDS)
 
@@ -223,15 +289,7 @@ def _friendly_clarification(query: str) -> str:  # noqa: ARG001
 
 
 def _upcoming_weekend_days(now: datetime) -> set[datetime.date]:
-    weekday = now.weekday()
-    days_until_saturday = (5 - weekday) % 7
-    if weekday == 5:
-        days_until_saturday = 0
-    if weekday == 6:
-        days_until_saturday = 6
-    saturday = (now + timedelta(days=days_until_saturday)).date()
-    sunday = saturday + timedelta(days=1)
-    return {saturday, sunday}
+    return set(upcoming_weekend_dates(now=now))
 
 
 def _diverse_sample(candidates: list[EventCandidate], limit: int) -> list[EventCandidate]:

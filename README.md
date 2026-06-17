@@ -6,7 +6,34 @@
 
 ---
 
-## Возможности
+## Возможности (002)
+
+| Режим | Как пользоваться | Что получает пользователь |
+|-------|------------------|---------------------------|
+| **Главное меню** | `/start` → выбор города | 🎲 Случайный · 📝 Опрос · 🔥 Популярное · ❤️ Избранное · ⚙️ Настройки |
+| **Опрос** | 📝 Опрос → 4 шага (кнопки) | Персонализированная карточка + «Другой вариант» / «В избранное» / «Заново» |
+| **Случайный** | 🎲 Случайный вариант | Одна карточка из города |
+| **Популярное** | 🔥 Популярное | 5 пунктов + «Показать ещё» (до 10) |
+| **Избранное** | ❤️ на карточке / меню | Сохранённые события между сессиями |
+| **ИИ-помощник** | Произвольный текст в чат | Поиск мероприятий и мест (как в 001) |
+| **Legacy категории** | `/categories` | Сетка категорий 001 (скрыта с главного экрана) |
+
+### Источники данных и города
+
+- **Универсальные (15 городов):** KudaGo, Яндекс Афиша, Timepad, MTS Live, T-Bank Город.
+- **Только Москва (city-locked):** Культура Москвы, Time Out Москва, Мой спортивный район, МТПП.
+
+```bash
+python scripts/sync_events.py --city moscow
+python scripts/sync_events.py --all-cities
+python scripts/count_events.py --city moscow --min-events 200 --min-sources 5
+python scripts/count_events.py --all-cities --min-events 30 --min-sources 2
+python scripts/backfill_activity.py     # legacy activity_slug backfill
+```
+
+---
+
+## Возможности (001 — legacy)
 
 | Режим | Как пользоваться | Что получает пользователь |
 |-------|------------------|---------------------------|
@@ -165,13 +192,25 @@ INFO:aiogram.dispatcher:Run polling for bot @...
 
 | Источник | Slug | Тип | Статус |
 |----------|------|-----|--------|
-| [KudaGo API](https://kudago.com/public-api/v1.4/) | `kudago` | REST API | ✅ Основной, стабильный |
-| [Яндекс Афиша](https://afisha.yandex.ru) | `yandex_afisha` | HTML scraping | ⚠️ Часто блокируется captcha |
+| [KudaGo API](https://kudago.com/public-api/v1.4/) | `kudago` | REST API | ✅ Универсальный (15 городов) |
+| [Яндекс Афиша](https://afisha.yandex.ru) | `yandex_afisha` | HTML scraping | ⚠️ Универсальный (15 городов), возможны captcha |
+| [Timepad](https://afisha.timepad.ru/) | `timepad` | HTML + JSON-LD | ✅ Универсальный (15 городов) |
+| [MTS Live](https://live.mts.ru/) | `mts_live` | HTML + JSON-LD | ✅ Универсальный (15 городов) |
+| [T-Bank Город](https://www.tbank.ru/gorod/afisha/) | `tbank_gorod` | HTML + JSON-LD | ✅ Универсальный (15 городов) |
+| [Культура Москвы](https://www.mos.ru/kultura/) | `mos_kultura` | HTML scraping | ℹ️ Только Москва |
+| [Time Out Москва](https://www.timeout.ru/msk) | `timeout_msk` | HTML scraping | ℹ️ Только Москва |
+| [Мой спортивный район](https://moysportrayon.sport.mos.ru) | `mos_sport_rayon` | HTML scraping | ℹ️ Только Москва |
+| [МТПП](https://mostpp.ru/events/) | `mtpp` | HTML + JSON-LD | ℹ️ Только Москва |
 
 Синхронизация запускается:
 
 - вручную: `python scripts/sync_events.py`
 - автоматически: каждый день в **03:00** (APScheduler в `src/bot/main.py`)
+
+Проверки покрытия:
+
+- Москва (SC-002): `python scripts/count_events.py --city moscow --min-events 200 --min-sources 5`
+- Все города: `python scripts/count_events.py --all-cities --min-events 30 --min-sources 2`
 
 ### Поддерживаемые города
 

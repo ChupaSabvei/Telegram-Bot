@@ -1,0 +1,50 @@
+{
+  "usableSessionsCount": 1,
+  "retiredSessionsCount": 0,
+  "sessions": [
+    {
+      "id": "session_GjSVjnbFzY",
+      "cookieJar": {
+        "version": "tough-cookie@6.0.1",
+        "storeType": "MemoryCookieStore",
+        "rejectPublicSuffixes": true,
+        "enableLooseMode": false,
+        "allowSpecialUseDomain": true,
+        "prefixSecurity": "silent",
+        "cookies": [
+          {
+            "key": "region",
+            "value": "26629",
+            "expires": "2026-06-18T03:09:20.000Z",
+            "maxAge": 259200,
+            "domain": "mostpp.ru",
+            "path": "/",
+            "secure": true,
+            "hostOnly": true,
+            "creation": "2026-06-15T03:09:19.972Z",
+            "lastAccessed": "2026-06-15T03:09:19.972Z"
+          },
+          {
+            "key": "PHPSESSID",
+            "value": "KYzSM2y77iMTQvowHax5zg7xTzXP3mR3",
+            "domain": "mostpp.ru",
+            "path": "/",
+            "secure": true,
+            "httpOnly": true,
+            "hostOnly": false,
+            "creation": "2026-06-15T03:09:19.972Z",
+            "lastAccessed": "2026-06-15T03:09:19.972Z"
+          }
+        ]
+      },
+      "userData": {},
+      "maxErrorScore": 3,
+      "errorScoreDecrement": 0.5,
+      "expiresAt": "2026-06-15T03:59:19.478Z",
+      "createdAt": "2026-06-15T03:09:19.478Z",
+      "usageCount": 1,
+      "maxUsageCount": 50,
+      "errorScore": 0
+    }
+  ]
+}

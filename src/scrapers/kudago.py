@@ -9,19 +9,6 @@ from src.storage.schemas import CATEGORY_SLUGS, EventDTO
 KUDAGO_CITY_MAP = {
     "moscow": "msk",
     "spb": "spb",
-    "novosibirsk": "nsk",
-    "yekaterinburg": "ekb",
-    "kazan": "kzn",
-    "nizhny_novgorod": "nn",
-    "chelyabinsk": "chl",
-    "samara": "smr",
-    "omsk": "omsk",
-    "rostov_on_don": "rnd",
-    "ufa": "ufa",
-    "krasnoyarsk": "krs",
-    "voronezh": "vrn",
-    "perm": "perm",
-    "volgograd": "vlg",
 }
 
 CATEGORY_MAP = {
@@ -39,7 +26,7 @@ CATEGORY_MAP = {
 }
 
 KUDAGO_FETCH_CATEGORIES = tuple(CATEGORY_MAP.keys())
-MAX_PAGES_PER_CATEGORY = 3
+MAX_PAGES_PER_CATEGORY = 8
 PAGE_SIZE = 100
 
 
@@ -75,6 +62,7 @@ class KudaGoScraper:
     slug = "kudago"
     name = "KudaGo API"
     base_url = "https://kudago.com/public-api/v1.4/events/"
+    supported_cities = tuple(KUDAGO_CITY_MAP.keys())
 
     async def fetch_events(self, city_slug: str) -> list[EventDTO]:
         location = KUDAGO_CITY_MAP.get(city_slug)

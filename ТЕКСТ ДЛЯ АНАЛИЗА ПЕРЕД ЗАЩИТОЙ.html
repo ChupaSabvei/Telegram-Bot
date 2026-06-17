@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Afisha AI Bot — описание проекта для защиты</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --ink: #172033;
+      --muted: #5e6a7d;
+      --accent: #246bfe;
+      --accent-2: #00a88f;
+      --line: #dfe6f1;
+      --soft: #eef4ff;
+      --warn: #fff7e6;
+      --code: #101828;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, Segoe UI, Roboto, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    header {
+      padding: 56px 8vw 40px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 85% 20%, rgba(255,255,255,.22), transparent 28%),
+        linear-gradient(135deg, #172033 0%, #246bfe 62%, #00a88f 100%);
+    }
+
+    header h1 {
+      max-width: 1080px;
+      margin: 0 auto 12px;
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    header p {
+      max-width: 1080px;
+      margin: 0 auto;
+      font-size: 19px;
+      color: rgba(255,255,255,.9);
+    }
+
+    main {
+      max-width: 1120px;
+      margin: -22px auto 56px;
+      padding: 0 24px;
+    }
+
+    section, .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 28px;
+      margin: 22px 0;
+      box-shadow: 0 10px 35px rgba(23, 32, 51, .07);
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 28px;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      margin: 24px 0 10px;
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    p { margin: 10px 0; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 7px 0; }
+
+    .lead {
+      font-size: 18px;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .mini {
+      padding: 18px;
+      border-radius: 16px;
+      background: var(--soft);
+      border: 1px solid #d8e5ff;
+    }
+
+    .mini strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--accent);
+    }
+
+    .tag {
+      display: inline-block;
+      margin: 4px 6px 4px 0;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #eef4ff;
+      color: #1649b8;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 14px;
+      font-size: 15px;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eef4ff;
+      color: #1649b8;
+      font-weight: 750;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    code {
+      padding: 2px 6px;
+      border-radius: 6px;
+      color: var(--code);
+      background: #eef1f6;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 92%;
+    }
+
+    pre {
+      overflow-x: auto;
+      padding: 16px;
+      border-radius: 16px;
+      color: #e7edf7;
+      background: #101828;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 14px;
+    }
+
+    .note {
+      padding: 16px 18px;
+      border-left: 5px solid var(--accent-2);
+      border-radius: 14px;
+      background: #edfffb;
+    }
+
+    .warning {
+      padding: 16px 18px;
+      border-left: 5px solid #f5a524;
+      border-radius: 14px;
+      background: var(--warn);
+    }
+
+    .toc a {
+      display: inline-block;
+      margin: 4px 8px 4px 0;
+      color: var(--accent);
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    footer {
+      max-width: 1120px;
+      margin: 0 auto 42px;
+      padding: 0 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media print {
+      body { background: #fff; }
+      header { color: #111; background: #fff; border-bottom: 2px solid #111; }
+      main { margin-top: 0; }
+      section, .card { box-shadow: none; break-inside: avoid; }
+      a { color: #111; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Afisha AI Bot — Telegram-бот для подбора мероприятий</h1>
+    <p>Подробное описание проекта для защиты: как работает бот, как он создавался, какие технологии используются, почему выбрана такая архитектура и как обеспечивается качество.</p>
+  </header>
+
+  <main>
+    <section class="toc">
+      <h2>Кратко о проекте</h2>
+      <p class="lead">
+        Afisha AI — это Telegram-бот, который помогает пользователю найти офлайн-досуг:
+        мероприятия из афиш, подборки по опросу, случайные варианты, популярные события, избранное
+        и свободный ИИ-поиск по текстовому запросу.
+      </p>
+      <p>
+        <a href="#value">Ценность</a>
+        <a href="#user-flow">Пользовательский сценарий</a>
+        <a href="#architecture">Архитектура</a>
+        <a href="#data">Данные и парсинг</a>
+        <a href="#ai">ИИ</a>
+        <a href="#storage">База данных</a>
+        <a href="#dev-process">Разработка</a>
+        <a href="#quality">Качество</a>
+        <a href="#defense">Аргументы для защиты</a>
+      </p>
+    </section>
+
+    <section id="value">
+      <h2>1. Проблема и ценность решения</h2>
+      <p>
+        Обычные афиши требуют, чтобы пользователь сам знал, что искать: концерт, театр,
+        выставку, спорт или детское мероприятие. В реальности запрос часто звучит иначе:
+        «куда сходить с семьёй», «что есть на выходных», «хочу недорого и в помещении»,
+        «найди бильярд» или «что популярно в Москве». Бот закрывает эту проблему через
+        короткий диалог и ИИ-помощника.
+      </p>
+      <div class="grid">
+        <div class="mini">
+          <strong>Для пользователя</strong>
+          Меньше ручного поиска: бот сразу выдаёт карточку или подборку с датой, ценой, местом и ссылкой.
+        </div>
+        <div class="mini">
+          <strong>Для защиты проекта</strong>
+          Есть понятная инженерная задача: сбор данных, нормализация, хранение, поиск, Telegram UX и ИИ.
+        </div>
+        <div class="mini">
+          <strong>Для развития</strong>
+          Архитектура расширяемая: можно добавлять новые города, источники, сценарии и рекомендации.
+        </div>
+      </div>
+    </section>
+
+    <section id="user-flow">
+      <h2>2. Как работает бот для пользователя</h2>
+      <h3>Основной сценарий</h3>
+      <ol>
+        <li>Пользователь открывает Telegram-бота <code>@Afisha_ai_bot</code> и отправляет <code>/start</code>.</li>
+        <li>Если город ещё не выбран, бот просит выбрать город из поддерживаемого списка.</li>
+        <li>После выбора города появляется главное меню: «Случайный вариант», «Опрос», «Популярное», «Избранное», «Настройки».</li>
+        <li>Пользователь выбирает подходящий режим, а бот возвращает карточку события или список.</li>
+      </ol>
+
+      <h3>Опросный подбор</h3>
+      <p>
+        Опрос состоит из четырёх шагов. Он сделан кнопками, чтобы пользователь не вводил
+        свободный текст и не получал непредсказуемый сценарий.
+      </p>
+      <table>
+        <tr><th>Шаг</th><th>Варианты</th><th>Зачем нужен</th></tr>
+        <tr><td>Кто идёт?</td><td>Один, пара, семья, друзья</td><td>Фильтрует события по аудитории.</td></tr>
+        <tr><td>Активность</td><td>Спорт, дети, семейный отдых, культура, гастро, релакс</td><td>Понимает тип досуга.</td></tr>
+        <tr><td>Бюджет</td><td>Бесплатно, до 1000, до 3000, без лимита</td><td>Исключает неподходящие по цене события.</td></tr>
+        <tr><td>Формат</td><td>Крытое, всё равно, у дома</td><td>Учитывает погоду, локацию и формат.</td></tr>
+      </table>
+
+      <h3>Другие режимы</h3>
+      <ul>
+        <li><strong>Случайный вариант</strong> — бот быстро показывает одну карточку из города пользователя.</li>
+        <li><strong>Популярное</strong> — показывает 5 популярных событий и кнопку «Показать ещё» до 10.</li>
+        <li><strong>Избранное</strong> — пользователь сохраняет понравившиеся карточки и возвращается к ним позже.</li>
+        <li><strong>Свободный текст</strong> — сообщение вроде «джаз на выходных» или «куда сходить на бильярд» обрабатывается ИИ-помощником.</li>
+        <li><strong>Настройки</strong> — смена города без перезапуска проекта или ручного вмешательства.</li>
+      </ul>
+    </section>
+
+    <section id="architecture">
+      <h2>3. Архитектура приложения</h2>
+      <p>
+        Проект построен как модульный Python-сервис. Основная идея: разделить Telegram-логику,
+        парсинг, ИИ и хранение данных, чтобы каждая часть могла развиваться независимо.
+      </p>
+      <pre>src/
+├── bot/        Telegram handlers, keyboards, formatters, services
+├── scrapers/   загрузчики внешних афиш и общий runner синхронизации
+├── ai/         LLM-клиент, ранжирование, intent, классификация activity_slug
+└── storage/    SQLAlchemy models, schemas, repositories, migrations</pre>
+
+      <table>
+        <tr><th>Модуль</th><th>Что делает</th><th>Почему это важно</th></tr>
+        <tr>
+          <td><code>src/bot</code></td>
+          <td>Обрабатывает команды, кнопки, FSM-опрос, карточки, меню.</td>
+          <td>Telegram-логика не смешивается с базой и парсерами.</td>
+        </tr>
+        <tr>
+          <td><code>src/scrapers</code></td>
+          <td>Получает события из KudaGo, Яндекс Афиши, Timepad, MTS Live, T-Bank, mos.ru и других источников.</td>
+          <td>Новые источники подключаются как отдельные классы.</td>
+        </tr>
+        <tr>
+          <td><code>src/ai</code></td>
+          <td>Определяет тип запроса, ранжирует события, подбирает места, классифицирует события.</td>
+          <td>ИИ используется там, где правила слабее, но не блокирует базовый сценарий.</td>
+        </tr>
+        <tr>
+          <td><code>src/storage</code></td>
+          <td>Хранит события, источники, пользователей, избранное, статусы синхронизации.</td>
+          <td>Данные сохраняются между сессиями и могут работать на SQLite или PostgreSQL.</td>
+        </tr>
+      </table>
+
+      <h3>Запуск и фоновые задачи</h3>
+      <p>
+        Точка входа — <code>python -m src.bot.main</code>. При старте приложение инициализирует
+        базу, регистрирует routers aiogram и запускает polling. Для обновления данных используется
+        <code>APScheduler</code>: каждый день в 03:00 выполняется синхронизация источников.
+      </p>
+    </section>
+
+    <section id="data">
+      <h2>4. Источники данных и парсинг</h2>
+      <p>
+        Бот не хранит вручную составленную афишу. Он агрегирует данные из внешних публичных
+        источников, нормализует их в единый формат <code>EventDTO</code>, фильтрует по горизонту
+        30 дней, удаляет дубликаты и сохраняет в БД.
+      </p>
+
+      <h3>Подключённые источники</h3>
+      <table>
+        <tr><th>Источник</th><th>Тип</th><th>Роль</th></tr>
+        <tr><td>KudaGo</td><td>REST API</td><td>Основной стабильный источник для 15 городов.</td></tr>
+        <tr><td>Яндекс Афиша</td><td>HTML scraping</td><td>Best-effort источник, возможны captcha/403.</td></tr>
+        <tr><td>Timepad</td><td>HTML / JSON-LD</td><td>События, лекции, фестивали, городские активности.</td></tr>
+        <tr><td>MTS Live</td><td>HTML / JSON-LD</td><td>Концерты, шоу и билетные события.</td></tr>
+        <tr><td>T-Bank Город</td><td>HTML / JSON-LD</td><td>Афиша и городские рекомендации.</td></tr>
+        <tr><td>Культура Москвы</td><td>HTML scraping</td><td>Культурные городские события Москвы.</td></tr>
+        <tr><td>Time Out Москва</td><td>HTML scraping</td><td>Редакционные подборки и события.</td></tr>
+        <tr><td>Мой спортивный район</td><td>HTML scraping</td><td>Спортивные активности Москвы.</td></tr>
+        <tr><td>МТПП</td><td>HTML / JSON-LD</td><td>Деловые и образовательные события.</td></tr>
+        <tr><td>Telegram/VK источники</td><td>Социальные источники</td><td>Резервное расширение покрытия, если основные сайты дают мало данных.</td></tr>
+      </table>
+
+      <h3>Почему используется Crawlee</h3>
+      <p>
+        В проект добавлены <code>crawlee</code> и <code>playwright</code>. Crawlee используется как
+        Node.js-слой для получения HTML там, где обычный <code>httpx</code> может быть недостаточен:
+        динамические страницы, JavaScript-рендеринг, сложная загрузка карточек или антибот-поведение.
+      </p>
+      <ul>
+        <li><code>scripts/crawlee_fetch.mjs</code> запускает <code>CheerioCrawler</code> или <code>PlaywrightCrawler</code>.</li>
+        <li>Для <code>afisha.timepad.ru</code> и <code>afisha.yandex.ru</code> включается браузерный режим Playwright.</li>
+        <li><code>src/scrapers/crawlee_client.py</code> вызывает Node-скрипт из Python и возвращает HTML в общий pipeline.</li>
+        <li>Если встречается captcha, клиент возвращает ошибку, а не ломает весь sync.</li>
+      </ul>
+
+      <h3>ScrapingBee и антибот-защита</h3>
+      <p>
+        Для некоторых HTML-источников подключён ScrapingBee: он помогает получать страницы через
+        прокси/stealth-режим и снижает риск captcha. В прошлых проверках ScrapingBee позволил получить
+        большой HTML Яндекс Афиши без 401 и без captcha. Это важный практический элемент, потому что
+        учебный бот работает с реальными сайтами, а не только с тестовыми fixture-файлами.
+      </p>
+
+      <div class="note">
+        <strong>Главный инженерный принцип парсинга:</strong> сбой одного сайта не должен останавливать
+        бота. Каждый scraper изолирован: ошибка фиксируется в статусе источника, остальные источники продолжают синхронизацию.
+      </div>
+    </section>
+
+    <section id="ai">
+      <h2>5. Как используется искусственный интеллект</h2>
+      <p>
+        ИИ в проекте подключён через OpenAI-compatible API. Это значит, что код использует библиотеку
+        <code>openai</code>, но провайдер может быть не только OpenAI. В рабочей конфигурации использовалась
+        модель Groq через API-ключ и base URL <code>https://api.groq.com/openai/v1</code>.
+      </p>
+
+      <h3>Где именно используется ИИ</h3>
+      <ol>
+        <li><strong>Свободный текст пользователя.</strong> Бот понимает запросы вроде «джаз на выходных» или «куда сходить на бильярд».</li>
+        <li><strong>Ранжирование событий.</strong> Из базы выбираются кандидаты, а LLM помогает выбрать наиболее релевантные <code>event_id</code>.</li>
+        <li><strong>Рекомендации мест.</strong> Для запросов про бильярд, боулинг, пляжи, караоке и т.д. ИИ формирует список мест и ссылки на карты.</li>
+        <li><strong>Классификация при синхронизации.</strong> Если источник не даёт категорию активности, ИИ определяет <code>activity_slug</code>: спорт, дети, семья, культура, гастро или релакс.</li>
+      </ol>
+
+      <h3>Почему ИИ не используется на каждом шаге опроса</h3>
+      <p>
+        Опросный сценарий сделан rule-based: кнопки → фильтры → запрос к БД → карточка. Это быстрее,
+        дешевле и стабильнее. ИИ применяется на этапе ingest или свободного текстового поиска, а не в
+        каждом callback. Так бот укладывается в цель по скорости ответа до 5 секунд и остаётся работоспособным,
+        даже если LLM-провайдер временно недоступен.
+      </p>
+
+      <h3>Fallback-логика</h3>
+      <p>
+        Если ИИ недоступен, система использует rule-based classifier и fuzzy fallback. Неклассифицированные
+        события сохраняются и повторно обрабатываются при следующей синхронизации. Это лучше, чем терять
+        данные или останавливать весь процесс.
+      </p>
+    </section>
+
+    <section id="storage">
+      <h2>6. Хранение данных</h2>
+      <p>
+        Для доступа к базе используется <code>SQLAlchemy 2 async</code>. В разработке применяется SQLite,
+        в production предусмотрен PostgreSQL, в том числе Supabase. Такой выбор даёт простой локальный
+        запуск и нормальный путь к продакшену.
+      </p>
+      <table>
+        <tr><th>Сущность</th><th>Что хранит</th></tr>
+        <tr><td>Event</td><td>Название, описание, дата, город, место, цена, источник, URL, activity_slug, формат площадки, рейтинг популярности.</td></tr>
+        <tr><td>EventSource</td><td>Источник данных, статус последней синхронизации, ошибка, активность.</td></tr>
+        <tr><td>User Profile</td><td>Telegram-пользователь и выбранный город.</td></tr>
+        <tr><td>Favorite</td><td>Связь пользователя с сохранённым событием.</td></tr>
+        <tr><td>Collections</td><td>Дополнительная логика подборок и шаринга, если нужна расширенная демонстрация.</td></tr>
+      </table>
+    </section>
+
+    <section id="dev-process">
+      <h2>7. Как проект создавался</h2>
+      <h3>Git и ветки</h3>
+      <p>
+        Разработка ведётся через GitHub и feature branches. В репозитории есть основная ветка
+        <code>master</code>, которая используется как production/stable ветка, и <code>testing</code>,
+        которая нужна для фиксации прогресса и более подробной проверки перед переносом в основную ветку.
+        Текущая крупная feature-ветка — <code>002-multi-source-survey-flow</code>.
+      </p>
+      <p>
+        Такой подход нужен, чтобы не ломать стабильную версию бота во время активной разработки:
+        экспериментальные изменения сначала проходят через тестовую/feature-ветку, проверяются, затем
+        могут быть перенесены в production.
+      </p>
+
+      <h3>Spec Kit development</h3>
+      <p>
+        Основная часть приложения проектировалась через Spec Kit: сначала формировались требования,
+        затем план, контракты, модель данных, quickstart и список задач. Это похоже на промышленный
+        подход: перед кодом фиксируется, что именно должно быть реализовано и как это проверять.
+      </p>
+      <table>
+        <tr><th>Артефакт</th><th>Назначение</th></tr>
+        <tr><td><code>spec.md</code></td><td>Функциональные требования, user stories, edge cases, success criteria.</td></tr>
+        <tr><td><code>plan.md</code></td><td>Архитектура, технический подход, структура модулей, риски.</td></tr>
+        <tr><td><code>contracts/</code></td><td>Контракты формата событий, scraper-интерфейса, survey flow и matcher.</td></tr>
+        <tr><td><code>tasks.md</code></td><td>Пошаговый dependency-ordered список задач с TDD и чекпоинтами.</td></tr>
+        <tr><td><code>quickstart.md</code></td><td>Сценарии ручной проверки перед демонстрацией.</td></tr>
+      </table>
+
+      <h3>Loop code review</h3>
+      <p>
+        Для ревью использовался кастомный skill <code>loop-code-review</code>. Его идея: независимый
+        reviewer-subagent проверяет активные изменения, возвращает findings и оценку, затем исправления
+        валидируются тестами. Цикл повторяется до оценки не ниже 9.5/10 или до явного сообщения, что
+        actionable comments отсутствуют.
+      </p>
+      <p>
+        Это полезно для защиты: можно объяснить, что качество проверялось не только вручную, но и через
+        повторяемый review-процесс с независимым контекстом.
+      </p>
+
+      <h3>Headroom / RTK для экономии токенов</h3>
+      <p>
+        В рабочем процессе предусмотрено использование headroom/RTK-команд для сокращения объёма вывода
+        от терминала и экономии токенов при работе с AI-агентом. Например, вместо полного вывода тестов
+        или git diff можно получать компактную версию, где остаётся самое важное. В текущей локальной
+        PowerShell-среде команда <code>rtk</code> не была доступна в PATH, но сама идея процесса сохранена:
+        меньше шума в выводе, больше внимания на ошибках и решениях.
+      </p>
+    </section>
+
+    <section id="quality">
+      <h2>8. Тестирование и контроль качества</h2>
+      <p>
+        Проект покрывается unit, contract и integration тестами. Это важно, потому что здесь много
+        внешних зависимостей: Telegram, сайты-источники, LLM, база данных и парсинг HTML.
+      </p>
+      <table>
+        <tr><th>Тип проверки</th><th>Что проверяет</th></tr>
+        <tr><td>Unit tests</td><td>Matcher опроса, форматтеры, ранжирование, фильтры, парсеры на fixture HTML.</td></tr>
+        <tr><td>Contract tests</td><td>Соответствие <code>EventDTO</code> JSON-схеме и scraper-контрактам.</td></tr>
+        <tr><td>Integration tests</td><td>FSM опроса, избранное, sync, свободный текст, сценарии пользователя.</td></tr>
+        <tr><td>Ruff</td><td>Статический анализ и единый стиль Python-кода.</td></tr>
+        <tr><td>GitHub Actions</td><td>CI на push/PR в основные ветки.</td></tr>
+      </table>
+      <pre>pytest -q
+pytest tests/unit tests/contract -v
+ruff check src tests
+python scripts/count_events.py --city moscow --min-events 200 --min-sources 5</pre>
+      <div class="warning">
+        Перед очной демонстрацией стоит отдельно запустить бота, обновить события для Москвы и проверить
+        сценарии: <code>/start</code>, опрос, случайный вариант, популярное, избранное и свободный текст.
+      </div>
+    </section>
+
+    <section id="defense">
+      <h2>9. Что говорить преподавателю: аргументы “что, зачем и почему”</h2>
+      <h3>Почему Telegram-бот</h3>
+      <p>
+        Telegram снижает порог входа: пользователю не нужно устанавливать отдельное приложение или
+        открывать сайт. Бот работает как диалоговый интерфейс и хорошо подходит для быстрых рекомендаций.
+      </p>
+
+      <h3>Почему aiogram 3</h3>
+      <p>
+        <code>aiogram 3</code> асинхронный, хорошо подходит под Telegram polling/webhook, поддерживает
+        routers и FSM. Это удобно для сценариев с кнопками, опросом, callback-обработчиками и несколькими
+        независимыми разделами меню.
+      </p>
+
+      <h3>Почему несколько источников</h3>
+      <p>
+        Один источник ненадёжен: сайт может отдавать captcha, менять HTML или иметь мало событий.
+        Мульти-источники повышают покрытие и делают подбор релевантнее. Для Москвы задан измеримый
+        критерий: минимум 200 уникальных событий на 30 дней из минимум 5 источников.
+      </p>
+
+      <h3>Почему SQLite + PostgreSQL/Supabase</h3>
+      <p>
+        SQLite удобен для локальной разработки и защиты на ноутбуке. PostgreSQL/Supabase нужен для
+        production: многопользовательская работа, стабильное хранение, резервное копирование и нормальная
+        эксплуатация на сервере.
+      </p>
+
+      <h3>Почему Groq/OpenAI-compatible API</h3>
+      <p>
+        OpenAI-compatible интерфейс даёт гибкость: можно использовать Groq, OpenAI или другого провайдера
+        без переписывания всей бизнес-логики. Groq выбран как быстрый LLM-провайдер, подходящий для
+        интерактивного ответа в боте.
+      </p>
+
+      <h3>Почему Crawlee и ScrapingBee</h3>
+      <p>
+        Реальные сайты часто защищены от простых HTTP-запросов или рендерят данные через JavaScript.
+        Crawlee/Playwright помогают получить HTML динамических страниц, а ScrapingBee помогает обходить
+        часть антибот-ограничений. Это делает проект ближе к реальной инженерной задаче, а не к учебному
+        парсеру одного статичного сайта.
+      </p>
+
+      <h3>Почему Spec Kit</h3>
+      <p>
+        Spec Kit позволил вести разработку не хаотично, а от требований к реализации: сначала user stories
+        и acceptance criteria, потом план и контракты, затем задачи и тесты. Это снижает риск “написали код,
+        но не то, что нужно пользователю”.
+      </p>
+
+      <h3>Почему loop-code-review</h3>
+      <p>
+        Кастомный review-loop нужен для качества: независимый агент смотрит diff и ищет баги, регрессии,
+        пробелы в тестах и архитектурные риски. Это имитирует командное code review и помогает находить
+        проблемы до демонстрации.
+      </p>
+    </section>
+
+    <section>
+      <h2>10. Что уже реализовано по фактическим файлам проекта</h2>
+      <p>
+        По текущему состоянию репозитория реализованы основные задачи фичи <code>002-multi-source-survey-flow</code>:
+        расширенная схема событий, избранное, опросный matcher, главный экран, новые handlers, новые scrapers,
+        AI-классификация, Crawlee-клиент, ScrapingBee-клиент, тесты и документация.
+      </p>
+      <p>
+        Ключевые файлы, которые можно показать на защите:
+      </p>
+      <ul>
+        <li><code>README.md</code> — описание возможностей, запуска, источников и архитектуры.</li>
+        <li><code>src/bot/main.py</code> — запуск бота, routers, scheduler.</li>
+        <li><code>src/bot/handlers/survey.py</code> — логика опроса.</li>
+        <li><code>src/bot/services/survey_matcher.py</code> — подбор событий по ответам.</li>
+        <li><code>src/scrapers/runner.py</code> — единый pipeline синхронизации источников.</li>
+        <li><code>src/scrapers/crawlee_client.py</code> и <code>scripts/crawlee_fetch.mjs</code> — интеграция Crawlee.</li>
+        <li><code>src/ai/client.py</code> — OpenAI-compatible LLM-клиент.</li>
+        <li><code>specs/002-multi-source-survey-flow/</code> — Spec Kit-документы.</li>
+        <li><code>tests/</code> — unit, contract и integration тесты.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>11. Короткая речь для защиты</h2>
+      <p>
+        «Мы сделали Telegram-бота Afisha AI, который помогает пользователю выбрать мероприятие или место
+        для досуга. Главное отличие от обычной афиши — пользователь может не знать точную категорию:
+        бот предлагает опрос, случайный вариант, популярное, избранное и свободный ИИ-поиск. Данные
+        берутся из нескольких внешних источников, нормализуются в единую модель, сохраняются в базу и
+        обновляются по расписанию. Для сложных HTML-страниц используется Crawlee/Playwright и ScrapingBee,
+        для рекомендаций и классификации — Groq через OpenAI-compatible API. Разработка велась через
+        GitHub-ветки, Spec Kit, тесты и кастомный loop-code-review, поэтому проект можно аргументировать
+        не только как работающий бот, но и как инженерно оформленное приложение».
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    Документ подготовлен для защиты проекта Afisha AI Bot. Содержит сведения из README, Spec Kit-документов,
+    текущего состояния репозитория и прошлых рабочих сессий по разработке.
+  </footer>
+</body>
+</html>

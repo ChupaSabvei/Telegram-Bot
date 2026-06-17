@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "event-schema/v2",
+  "title": "EventDTO",
+  "description": "Normalized event/place from any scraper (extends v1)",
+  "type": "object",
+  "required": [
+    "title",
+    "category_slug",
+    "city_slug",
+    "start_at",
+    "source_url",
+    "source_slug",
+    "venue_format"
+  ],
+  "properties": {
+    "external_id": { "type": ["string", "null"] },
+    "source_url": { "type": "string", "format": "uri" },
+    "source_slug": {
+      "type": "string",
+      "enum": [
+        "yandex_afisha",
+        "kudago",
+        "timepad",
+        "mts_live",
+        "tbank_gorod",
+        "mos_kultura",
+        "timeout_msk",
+        "mos_sport_rayon",
+        "mtpp"
+      ]
+    },
+    "title": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "description": { "type": ["string", "null"] },
+    "category_slug": {
+      "type": "string",
+      "enum": ["concerts", "exhibitions", "theater", "sport", "education", "other"]
+    },
+    "activity_slug": {
+      "type": ["string", "null"],
+      "enum": ["sport", "kids", "family", "culture", "gastro", "relax", null]
+    },
+    "city_slug": { "type": "string" },
+    "venue": { "type": ["string", "null"] },
+    "address": { "type": ["string", "null"] },
+    "start_at": { "type": "string", "format": "date-time" },
+    "end_at": { "type": ["string", "null"], "format": "date-time" },
+    "price_type": { "type": "string", "enum": ["free", "paid", "unknown"] },
+    "price_text": { "type": ["string", "null"] },
+    "price_amount_rub": { "type": ["integer", "null"], "minimum": 0 },
+    "venue_format": {
+      "type": "string",
+      "enum": ["indoor", "outdoor", "mixed", "online", "unknown"]
+    },
+    "audience_tags": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["solo", "couple", "family", "friends", "kids"] },
+      "default": []
+    },
+    "is_online": { "type": "boolean", "default": false },
+    "popularity_score": { "type": "integer", "minimum": 0, "default": 0 },
+    "image_url": { "type": ["string", "null"], "format": "uri" }
+  },
+  "additionalProperties": false
+}

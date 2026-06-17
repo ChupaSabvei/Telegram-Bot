@@ -13,7 +13,7 @@ from src.scrapers.yandex_afisha import YandexAfishaScraper
 
 @pytest.fixture()
 def event_validator() -> Draft7Validator:
-    schema_path = Path("specs/001-ai-event-discovery/contracts/event-schema.json")
+    schema_path = Path("specs/002-multi-source-survey-flow/contracts/event-schema-v2.json")
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
     return Draft7Validator(schema)
 
